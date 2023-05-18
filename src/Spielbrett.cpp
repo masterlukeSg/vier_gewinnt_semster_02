@@ -1,24 +1,12 @@
 #include "../include/Spielbrett.hpp"
+#include <iostream>
 
-using namespace vierGewinnt;
-
-class Spielbrett
+namespace vierGewinnt
 {
-    Spielbrett()
+
+    Spielbrett::Spielbrett()
     {
-    }
-    void whoIsWinning()
-    {
+        std::cout << "drinnen";
     }
 
-    bool legalMove(int position)
-    {
-        return true;
-    }
-    void setRing(int position)
-    {
-        if (legalMove(position))
-        {
-        }
-    }
-};
+}
