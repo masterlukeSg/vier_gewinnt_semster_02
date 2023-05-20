@@ -9,5 +9,5 @@ int main(){
 
     vierGewinnt::Spielbrett s = vierGewinnt::Spielbrett();
 
-
+    s.print();
 }
