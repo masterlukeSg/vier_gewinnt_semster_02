@@ -9,20 +9,18 @@ namespace vierGewinnt
     class Spielbrett
     {
     private:
-        int ringOne;
-        int ringTwo;
-        std::vector<std::string> reihenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
+        std::string ringOne,ringTwo;
+        std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
 
         /**
          * @brief Breite: 7, Höhe: 6
          */
-        std::vector<std::vector<std::string>> matrixBoard{reihenName, eins, zwei, drei, vier, fuenf, sechs, sieben};
+        std::vector<std::vector<std::string>> matrixBoard{spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben};
         bool legalMove(int Position);
 
     public:
-        Spielbrett();
+        Spielbrett(std::string ringOne_,std::string ringTwo_);
         void whoIsWinning();
-
         void setRing(int Position);
         std::string print();
     };

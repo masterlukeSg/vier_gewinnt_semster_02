@@ -1,13 +1,15 @@
 #include <../include/Spielbrett.hpp>
 #include <iostream>
+#include <string>
 
+using namespace std;
 using namespace vierGewinnt;
 
 
 int main(){
 
 
-    vierGewinnt::Spielbrett s = vierGewinnt::Spielbrett();
+    vierGewinnt::Spielbrett s = vierGewinnt::Spielbrett("SO ", "LU ");
 
-    s.print();
+    std::cout << s.print();
 }
