@@ -9,7 +9,7 @@ namespace vierGewinnt
     class Spielbrett
     {
     private:
-        std::string ringOne,ringTwo;
+        const std::string ringOne,ringTwo, unentschieden;
         std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
 
         /**
@@ -20,8 +20,8 @@ namespace vierGewinnt
 
     public:
         Spielbrett(std::string ringOne_,std::string ringTwo_);
-        void whoIsWinning();
-        void setRing(int Position);
+        std::string whoIsWinning();
+        bool setRing(int Position);
         std::string print();
     };
 }

@@ -10,10 +10,8 @@ using namespace std;
 namespace vierGewinnt
 {
 
-    Spielbrett::Spielbrett(string ringOne_, string ringTwo_)
+    Spielbrett::Spielbrett(string ringOne_, string ringTwo_) : unentschieden("unentschieden"), ringOne(ringOne_), ringTwo(ringTwo_)
     {
-        ringOne = ringOne_;
-        ringTwo = ringTwo_;
 
         vector spaltenName = matrixBoard[0];
 
@@ -21,25 +19,6 @@ namespace vierGewinnt
             spaltenName.push_back("0" + to_string(i + 1));
 
         matrixBoard[0] = spaltenName;
-
-        // Probe: wird vom nutzer gemacht!
-        matrixBoard[1].push_back(ringOne);
-        matrixBoard[1].push_back(ringOne);
-        matrixBoard[1].push_back(ringOne);
-
-        matrixBoard[2].push_back(ringTwo);
-
-        matrixBoard[3].push_back(ringOne);
-        matrixBoard[3].push_back(ringOne);
-        matrixBoard[3].push_back(ringOne);
-
-        matrixBoard[7].push_back(ringTwo);
-        matrixBoard[7].push_back(ringOne);
-        matrixBoard[7].push_back(ringTwo);
-
-        // for (int i = 1; i < matrixBoard.size(); i++)
-        //     for (int y = 0; y < 6; y++)
-        //         matrixBoard[i].push_back("--");
     }
 
     string Spielbrett::print()
@@ -56,7 +35,7 @@ namespace vierGewinnt
             for (int i = matrixBoard.size() - 1; i >= 1; i--)
             {
                 if (matrixBoard[i].size() > d)
-                    returnStringV.push_back(matrixBoard[i][d]);
+                    returnStringV.push_back(matrixBoard[i][d] + " ");
                 else
                     returnStringV.push_back("-- ");
             }
@@ -66,8 +45,64 @@ namespace vierGewinnt
 
         for (int i = returnStringV.size() - 1; i >= 0; i--)
             returnString = returnString + returnStringV[i];
-    
+
+        returnString = returnString + "\n";
         return returnString;
     }
 
+    bool Spielbrett::legalMove(int position)
+    {
+        if (position > 7)
+            return false;
+        else if (position <= 0)
+            return false;
+        else if (matrixBoard[position].size() == 6)
+            return false;
+
+        return true;
+    }
+
+    bool Spielbrett::setRing(int position)
+    {
+        if (!legalMove(position))
+        {
+            cout << "In die Reihe " << position << " kann nichts eingefügt werden" << endl;
+            return false;
+        }
+
+        // TODO: player->getName();
+        matrixBoard[position].push_back(ringOne);
+        return true;
+    }
+
+    std::string Spielbrett::whoIsWinning()
+    {
+        int counterOne, counterTwo = 0;
+
+        // vertikal untersuchen
+
+        for (size_t i = 1; i < matrixBoard.size(); i++)
+        {
+            for (string names : matrixBoard[i])
+            {
+                if (names == ringOne)
+                {
+                    counterOne++;
+                    counterTwo = 0;
+                }
+                else
+                {
+                    counterTwo++;
+                    counterOne = 0;
+                }
+                if (counterOne == 4)
+                    return ringOne;
+                else if (counterTwo == 4)
+                    return ringTwo;
+            }
+        }
+
+        // bei unetnschieden
+        return unentschieden;
+    }
 }
