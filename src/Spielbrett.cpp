@@ -11,7 +11,7 @@ using namespace std;
 namespace vierGewinnt
 {
 
-    Spielbrett::Spielbrett(): unentschieden("unentschieden")
+    Spielbrett::Spielbrett() : unentschieden("unentschieden")
     {
 
         vector spaltenName = matrixBoard[0];
@@ -20,11 +20,11 @@ namespace vierGewinnt
             spaltenName.push_back("0" + to_string(i + 1));
 
         matrixBoard[0] = spaltenName;
-    
     }
 
-    void Spielbrett::setPlayer(vierGewinnt::Spieler player){
-        ringOne = player.getName();
+    void Spielbrett::setPlayer(vierGewinnt::Spieler player)
+    {
+        ring = player.getName();
     }
 
     string Spielbrett::print()
@@ -58,6 +58,8 @@ namespace vierGewinnt
 
     bool Spielbrett::legalMove(int position)
     {
+        if (ring == "null")
+            return false;
         if (position > 7)
             return false;
         else if (position <= 0)
@@ -76,47 +78,36 @@ namespace vierGewinnt
             return false;
         }
 
-        // TODO: player->getName();
-        matrixBoard[position].push_back(ringOne);
+        matrixBoard[position].push_back(ring);
         return true;
     }
 
     std::string Spielbrett::whoIsWinning()
     {
-        int counterOne, counterTwo = 0;
 
         // vertikal untersuchen
+        int counter = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
             for (string names : matrixBoard[i])
             {
-                if (names == ringOne)
+                if (names == ring)
                 {
-                    counterTwo = 0;
-                    counterOne++;
-
-                    std::cout << names << " " << counterOne << std::endl;
-                }
-                else if (names == ringTwo)
-                {
-                    counterOne = 0;
-                    counterTwo++;
-
-                    std::cout << names << " " << counterTwo << std::endl;
+                    counter++;
                 }
                 else
                 {
-                    if (counterOne >= 4)
-                        return ringOne;
-                    if (counterTwo >= 4)
-                        return ringTwo;
+                    counter = 0;
                 }
             }
+
+            if (counter >= 4)
+                return ring;
+            counter = 0;
         }
-        /*
+
         // horizontal untersuchen
-        counterOne = 0;
-        counterTwo = 0;
+        counter = 0;
         int d = 1;
         while (d < 7)
         {
@@ -125,27 +116,26 @@ namespace vierGewinnt
                 // TODO: Klappt diese Abfrage ??
                 if (matrixBoard[i].size() > d)
                 {
-                    if (matrixBoard[i][d] == ringOne)
-                    {
-                        counterTwo = 0;
-                        counterOne++;
-                    }
-                    else if (matrixBoard[i][d] == ringTwo)
-                    {
-                        counterOne = 0;
-                        counterTwo++;
-                    }
+                    if (matrixBoard[i][d] == ring)
+                        counter++;
+
+                    else
+                        counter = 0;
                 }
             }
-            if (counterOne >= 4)
-                return ringOne;
-            if (counterTwo >= 4)
-                return ringTwo;
-            counterOne = 0;
-            counterTwo = 0;
+            if (counter >= 4)
+                return ring;
+            counter = 0;
             d++;
         }
-        */
+
+        
+        // diagonal untersuchen
+
+
+
+
+
         int matrixBoardGroeße = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
             if (matrixBoard[i].size() == 6)
