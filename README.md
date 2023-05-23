@@ -10,25 +10,25 @@ git push -uf origin main
 ```
 # vierGewinnt
 
-### Arbeitsaufteilung
+## Arbeitsaufteilung
 
-## Projektstruktur 
+### Projektstruktur 
   UML -> Alle
-  ReadMe -> Aicha
+  #### ReadMe -> Aicha
 
-## C++ Implementierung
+### C++ Implementierung
   Lobbyklasse -> Imene
-  Spielbrettklasse -> Lukas
-  Spielerklasse -> Aicha
+  #### Spielbrettklasse -> Lukas
+  #### Spielerklasse -> Aicha
 
-## Server Implementierung
+### Server Implementierung
   Server -> Aicha+Lukas
-  Client -> Imene+lukas
+  #### Client -> Imene+lukas
   
-## Test 
+### Test 
   Spieler Test -> Aicha
-  Spielbrett Test -> Lukas
-  Lobby Test -> Imene
+  #### Spielbrett Test -> Lukas
+  #### Lobby Test -> Imene
 
 
 
