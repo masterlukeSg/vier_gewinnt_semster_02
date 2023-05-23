@@ -108,7 +108,7 @@ namespace vierGewinnt
 
         // horizontal untersuchen
         counter = 0;
-        int d = 1;
+        int d = 0;
         while (d < 7)
         {
             for (int i = 0; i < matrixBoard.size(); i++)
@@ -129,21 +129,30 @@ namespace vierGewinnt
             d++;
         }
 
-        
         // diagonal untersuchen
+        counter = 0;
+        d = 1;
+        while (d < 7)
+        {
+            for (int i = 0; i < matrixBoard.size(); i++)
+            {
+                if (matrixBoard[i].size() > d)
+                {
+                    if (matrixBoard[i][d] == ring)
+                        counter++;
+                    else
+                        counter = 0;
+                }
+            }
 
+            int matrixBoardGroeße = 0;
+            for (size_t i = 1; i < matrixBoard.size(); i++)
+                if (matrixBoard[i].size() == 6)
+                    matrixBoardGroeße++;
 
-
-
-
-        int matrixBoardGroeße = 0;
-        for (size_t i = 1; i < matrixBoard.size(); i++)
-            if (matrixBoard[i].size() == 6)
-                matrixBoardGroeße++;
-
-        if (matrixBoardGroeße == 7)
-            return unentschieden;
-        else
-            return "null";
+            if (matrixBoardGroeße == 7)
+                return unentschieden;
+            else
+                return "null";
+        }
     }
-}
