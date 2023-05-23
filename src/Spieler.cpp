@@ -6,7 +6,7 @@ namespace vierGewinnt
 {
 
     Spieler::Spieler(std::string name_)
-    {
+    {   
         name = name_;
     }
     

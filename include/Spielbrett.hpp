@@ -10,7 +10,7 @@ namespace vierGewinnt
     class Spielbrett
     {
     private:
-        std::string ringOne, ringTwo, unentschieden;
+        std::string ring,unentschieden;
         std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
 
         /**

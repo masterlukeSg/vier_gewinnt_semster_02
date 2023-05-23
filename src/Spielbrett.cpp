@@ -131,28 +131,36 @@ namespace vierGewinnt
 
         // diagonal untersuchen
         counter = 0;
-        d = 1;
+        d = 0;
+        int f = d;
         while (d < 7)
         {
-            for (int i = 0; i < matrixBoard.size(); i++)
-            {
-                if (matrixBoard[i].size() > d)
-                {
-                    if (matrixBoard[i][d] == ring)
+            for (int i = 1; i < matrixBoard.size(); i++)
+            {   
+               // std::cout << "I: "  << i << " \n" << "F: " << f << std::endl;
+                if (matrixBoard[i].size() > f)
+                {   
+                    if (matrixBoard[i][f] == ring)
                         counter++;
                     else
                         counter = 0;
                 }
+                f++;
             }
-
-            int matrixBoardGroeße = 0;
-            for (size_t i = 1; i < matrixBoard.size(); i++)
-                if (matrixBoard[i].size() == 6)
-                    matrixBoardGroeße++;
-
-            if (matrixBoardGroeße == 7)
-                return unentschieden;
-            else
-                return "null";
+            f = d;
+            d++;
         }
+
+
+
+        int matrixBoardGroeße = 0;
+        for (size_t i = 1; i < matrixBoard.size(); i++)
+            if (matrixBoard[i].size() == 6)
+                matrixBoardGroeße++;
+
+        if (matrixBoardGroeße == 7)
+            return unentschieden;
+        else
+            return "null";
     }
+}
