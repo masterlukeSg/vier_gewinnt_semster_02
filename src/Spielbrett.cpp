@@ -1,3 +1,4 @@
+#include "../include/Spieler.hpp"
 #include "../include/Spielbrett.hpp"
 #include <iostream>
 #include <string>
@@ -10,7 +11,7 @@ using namespace std;
 namespace vierGewinnt
 {
 
-    Spielbrett::Spielbrett(string ringOne_, string ringTwo_) : unentschieden("unentschieden"), ringOne(ringOne_), ringTwo(ringTwo_)
+    Spielbrett::Spielbrett(): unentschieden("unentschieden")
     {
 
         vector spaltenName = matrixBoard[0];
@@ -20,6 +21,10 @@ namespace vierGewinnt
 
         matrixBoard[0] = spaltenName;
     
+    }
+
+    void Spielbrett::setPlayer(vierGewinnt::Spieler player){
+        ringOne = player.getName();
     }
 
     string Spielbrett::print()
