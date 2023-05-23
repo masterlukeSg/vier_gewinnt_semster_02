@@ -14,21 +14,27 @@ git push -uf origin main
 
 ### Projektstruktur 
   UML -> Alle
-  #### ReadMe -> Aicha
+  
+  ReadMe -> Aicha
 
 ### C++ Implementierung
   Lobbyklasse -> Imene
-  #### Spielbrettklasse -> Lukas
-  #### Spielerklasse -> Aicha
+  
+  Spielbrettklasse -> Lukas
+
+  Spielerklasse -> Aicha
 
 ### Server Implementierung
   Server -> Aicha+Lukas
-  #### Client -> Imene+lukas
+  
+  Client -> Imene+lukas
   
 ### Test 
   Spieler Test -> Aicha
-  #### Spielbrett Test -> Lukas
-  #### Lobby Test -> Imene
+  
+  Spielbrett Test -> Lukas
+ 
+  Lobby Test -> Imene
 
 
 
