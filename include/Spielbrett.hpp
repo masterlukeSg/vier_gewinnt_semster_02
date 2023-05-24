@@ -2,6 +2,8 @@
 
 #include "Spieler.hpp"
 #include <iostream>
+#include <stdexcept>
+#include <tuple>
 #include <string>
 #include <vector>
 
@@ -10,7 +12,8 @@ namespace vierGewinnt
     class Spielbrett
     {
     private:
-        std::string ring,unentschieden;
+        int matrix, position;
+        std::string ring, unentschieden;
         std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
 
         /**
@@ -18,6 +21,7 @@ namespace vierGewinnt
          */
         std::vector<std::vector<std::string>> matrixBoard{spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben};
         bool legalMove(int Position);
+        std::tuple<int, int> getGesetzterRingPosition();
 
     public:
         Spielbrett();
