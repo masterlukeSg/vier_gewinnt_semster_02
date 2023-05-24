@@ -1,8 +1,10 @@
 #include "../include/Spieler.hpp"
 #include "../include/Spielbrett.hpp"
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
+#include <tuple>
 
 // cmake -S . -B build && cmake --build build && cmake --install build
 
@@ -70,21 +72,31 @@ namespace vierGewinnt
         return true;
     }
 
-    bool Spielbrett::setRing(int position)
+    bool Spielbrett::setRing(int coordinate)
     {
-        if (!legalMove(position))
+        if (!legalMove(coordinate))
         {
-            cout << "In die Reihe " << position << " kann nichts eingefügt werden" << endl;
+            cout << "In die Reihe " << coordinate << " kann nichts eingefügt werden" << endl;
             return false;
         }
 
-        matrixBoard[position].push_back(ring);
+        matrixBoard[coordinate].push_back(ring);
+    
+        // für getGesetzterRingPosition Variablen 
+        matrix = coordinate;
+        position = matrixBoard[coordinate].size() - 1;
+
         return true;
     }
 
+    std::tuple<int,int> Spielbrett::getGesetzterRingPosition(){
+        return std::tuple<int, int>{matrix, position};
+    }
+    
+
     std::string Spielbrett::whoIsWinning()
     {
-
+       
         // vertikal untersuchen
         int counter = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
@@ -129,27 +141,33 @@ namespace vierGewinnt
             d++;
         }
 
+
+        auto getPosition = getGesetzterRingPosition();
+
+        int matrixInt = std::get<0>(getPosition);
+        int positionInt = std::get<1>(getPosition);
+
+
         // diagonal untersuchen
-        counter = 0;
-        d = 0;
-        int f = d;
-        while (d < 7)
-        {
-            for (int i = 1; i < matrixBoard.size(); i++)
-            {   
-               // std::cout << "I: "  << i << " \n" << "F: " << f << std::endl;
-                if (matrixBoard[i].size() > f)
-                {   
-                    if (matrixBoard[i][f] == ring)
-                        counter++;
-                    else
-                        counter = 0;
-                }
-                f++;
+        if (position = 0){
+            
+            //nur nach oben
+
+            for (int i = matrix; i < matrixBoard.size(); i++){
+                
             }
-            f = d;
-            d++;
+
+
         }
+
+        else if (position = 5){
+            //nur nach unten
+        }  
+
+        else{
+
+        }
+
 
 
 
