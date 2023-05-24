@@ -1,7 +1,10 @@
+#include "../include/Spieler.hpp"
 #include "../include/Spielbrett.hpp"
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
+#include <tuple>
 
 // cmake -S . -B build && cmake --build build && cmake --install build
 
@@ -10,7 +13,7 @@ using namespace std;
 namespace vierGewinnt
 {
 
-    Spielbrett::Spielbrett(string ringOne_, string ringTwo_) : unentschieden("unentschieden"), ringOne(ringOne_), ringTwo(ringTwo_)
+    Spielbrett::Spielbrett() : unentschieden("unentschieden")
     {
 
         vector spaltenName = matrixBoard[0];
@@ -19,6 +22,11 @@ namespace vierGewinnt
             spaltenName.push_back("0" + to_string(i + 1));
 
         matrixBoard[0] = spaltenName;
+    }
+
+    void Spielbrett::setPlayer(vierGewinnt::Spieler player)
+    {
+        ring = player.getName();
     }
 
     string Spielbrett::print()
@@ -52,6 +60,8 @@ namespace vierGewinnt
 
     bool Spielbrett::legalMove(int position)
     {
+        if (ring == "null")
+            return false;
         if (position > 7)
             return false;
         else if (position <= 0)
@@ -62,47 +72,113 @@ namespace vierGewinnt
         return true;
     }
 
-    bool Spielbrett::setRing(int position)
+    bool Spielbrett::setRing(int coordinate)
     {
-        if (!legalMove(position))
+        if (!legalMove(coordinate))
         {
-            cout << "In die Reihe " << position << " kann nichts eingefügt werden" << endl;
+            cout << "In die Reihe " << coordinate << " kann nichts eingefügt werden" << endl;
             return false;
         }
 
-        // TODO: player->getName();
-        matrixBoard[position].push_back(ringOne);
+        matrixBoard[coordinate].push_back(ring);
+    
+        // für getGesetzterRingPosition Variablen 
+        matrix = coordinate;
+        position = matrixBoard[coordinate].size() - 1;
+
         return true;
     }
 
+    std::tuple<int,int> Spielbrett::getGesetzterRingPosition(){
+        return std::tuple<int, int>{matrix, position};
+    }
+    
+
     std::string Spielbrett::whoIsWinning()
     {
-        int counterOne, counterTwo = 0;
-
+       
         // vertikal untersuchen
-
+        int counter = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
             for (string names : matrixBoard[i])
             {
-                if (names == ringOne)
+                if (names == ring)
                 {
-                    counterOne++;
-                    counterTwo = 0;
+                    counter++;
                 }
                 else
                 {
-                    counterTwo++;
-                    counterOne = 0;
+                    counter = 0;
                 }
-                if (counterOne == 4)
-                    return ringOne;
-                else if (counterTwo == 4)
-                    return ringTwo;
             }
+
+            if (counter >= 4)
+                return ring;
+            counter = 0;
         }
 
-        // bei unetnschieden
-        return unentschieden;
+        // horizontal untersuchen
+        counter = 0;
+        int d = 0;
+        while (d < 7)
+        {
+            for (int i = 0; i < matrixBoard.size(); i++)
+            {
+                // TODO: Klappt diese Abfrage ??
+                if (matrixBoard[i].size() > d)
+                {
+                    if (matrixBoard[i][d] == ring)
+                        counter++;
+
+                    else
+                        counter = 0;
+                }
+            }
+            if (counter >= 4)
+                return ring;
+            counter = 0;
+            d++;
+        }
+
+
+        auto getPosition = getGesetzterRingPosition();
+
+        int matrixInt = std::get<0>(getPosition);
+        int positionInt = std::get<1>(getPosition);
+
+
+        // diagonal untersuchen
+        if (position = 0){
+            
+            //nur nach oben
+
+            for (int i = matrix; i < matrixBoard.size(); i++){
+                
+            }
+
+
+        }
+
+        else if (position = 5){
+            //nur nach unten
+        }  
+
+        else{
+
+        }
+
+
+
+
+        int matrixBoardGroeße = 0;
+        for (size_t i = 1; i < matrixBoard.size(); i++)
+            if (matrixBoard[i].size() == 6)
+                matrixBoardGroeße++;
+
+        if (matrixBoardGroeße == 7)
+            return unentschieden;
+        else
+            return "null";
     }
 }

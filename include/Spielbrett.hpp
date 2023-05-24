@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Spieler.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,7 +10,7 @@ namespace vierGewinnt
     class Spielbrett
     {
     private:
-        const std::string ringOne,ringTwo, unentschieden;
+        std::string ring,unentschieden;
         std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
 
         /**
@@ -19,8 +20,9 @@ namespace vierGewinnt
         bool legalMove(int Position);
 
     public:
-        Spielbrett(std::string ringOne_,std::string ringTwo_);
+        Spielbrett();
         std::string whoIsWinning();
+        void setPlayer(Spieler player);
         bool setRing(int Position);
         std::string print();
     };
