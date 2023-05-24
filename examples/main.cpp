@@ -1,5 +1,6 @@
 #include <../include/Spielbrett.hpp>
 #include <../include/Spieler.hpp>
+#include <../include/lobby.hpp>
 
 #include <iostream>
 #include <string>
@@ -11,8 +12,8 @@ int main()
 {
 
     vierGewinnt::Spielbrett s = vierGewinnt::Spielbrett();
-    vierGewinnt::Spieler lukas = vierGewinnt::Spieler("LU");
-    vierGewinnt::Spieler ki = vierGewinnt::Spieler("KI");
+    vierGewinnt::Spieler lukas = vierGewinnt::Spieler("Lukas","LU");
+    vierGewinnt::Spieler imene = vierGewinnt::Spieler("imene", "KI");
    
     s.setPlayer(lukas);
 

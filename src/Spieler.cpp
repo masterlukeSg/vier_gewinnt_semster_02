@@ -6,15 +6,13 @@
 namespace vierGewinnt
 {
     
-        Spieler(const std::string& name_, const std::string& symbol_)
-            : name(name_), symbol(symbol_) {}
-
-        std::string getName() const
+        
+        std::string Spieler::getName() const
         {
             return name;
         }
 
-        std::string getSymbol() const
+        std::string Spieler::getSymbol() const
         {
             return symbol;
         }
