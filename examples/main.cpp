@@ -1,5 +1,6 @@
 #include <../include/Spielbrett.hpp>
 #include <../include/Spieler.hpp>
+#include <../include/lobby.hpp>
 
 #include <iostream>
 #include <string>
@@ -11,12 +12,15 @@ int main()
 {
 
     vierGewinnt::Spielbrett s = vierGewinnt::Spielbrett();
-    vierGewinnt::Spieler lukas = vierGewinnt::Spieler("LU");
-    vierGewinnt::Spieler ki = vierGewinnt::Spieler("KI");
+
+    vierGewinnt::Spieler lukas = vierGewinnt::Spieler("Lukas","LU");
+    vierGewinnt::Spieler imene = vierGewinnt::Spieler("imene", "KI");
+   
+    s.setPlayer(lukas);
 
     vector<int> liste;
 
-    s.setPlayer(ki);
+    s.setPlayer(imene);
     // DIAGONAL: test 1: linsk oben nach rechts unten
     liste = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4};
 
