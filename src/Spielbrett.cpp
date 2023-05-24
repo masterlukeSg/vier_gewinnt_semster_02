@@ -81,24 +81,25 @@ namespace vierGewinnt
         }
 
         matrixBoard[coordinate].push_back(ring);
-    
-        // für getGesetzterRingPosition Variablen 
+
+        // für getGesetzterRingPosition Variablen
         matrix = coordinate;
         position = matrixBoard[coordinate].size() - 1;
 
         return true;
     }
 
-    std::tuple<int,int> Spielbrett::getGesetzterRingPosition(){
+    std::tuple<int, int> Spielbrett::getGesetzterRingPosition()
+    {
         return std::tuple<int, int>{matrix, position};
     }
-    
 
     std::string Spielbrett::whoIsWinning()
     {
-       
+
         // vertikal untersuchen
         int counter = 0;
+        /*
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
             for (string names : matrixBoard[i])
@@ -140,36 +141,62 @@ namespace vierGewinnt
             counter = 0;
             d++;
         }
-
-
+*/
+        // braucht man das eigentlich???
         auto getPosition = getGesetzterRingPosition();
 
         int matrixInt = std::get<0>(getPosition);
         int positionInt = std::get<1>(getPosition);
 
+        counter = 0;
+        positionInt = position;
 
         // diagonal untersuchen
-        if (position = 0){
-            
-            //nur nach oben
+        if (positionInt == 0)
+        {
+            // nur nach oben
 
-            for (int i = matrix; i < matrixBoard.size(); i++){
-                
+            // nach rechts checken 
+            if (matrix <= 4)
+            {   
+                for (int i = matrix; i < matrixBoard.size(); i++)
+                {   
+                    // gitb es im Array überhaupt ein Element, dass in unserer Range liegt
+                    if (matrixBoard[i].size() >= positionInt)
+                    {
+                        // Ite Matrix am Punkt positionInt checken, ob Ring ist: counter erhöhen
+                        if (matrixBoard[i][positionInt] == ring)
+                            counter++;
+                        // Wenn anderer Spieler, dann counter auf null setzten
+                        else
+                            counter = 0;
+                    }
+                    // positionInt proportional zum nächsten Array erhöhre. Somit geht man die Diagonale ab
+                    positionInt++;
+                }
+            }
+            //nach links checken
+            else if (matrix >= 4)
+            {
             }
 
 
+
+            if (counter >= 4)
+                return ring;
+
+            positionInt = 0;
+            counter = 0;
         }
 
-        else if (position = 5){
-            //nur nach unten
-        }  
-
-        else{
-
+        else if (position == 5)
+        {
+            // nur nach unten
         }
 
-
-
+        else
+        {
+        }
 
         int matrixBoardGroeße = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
