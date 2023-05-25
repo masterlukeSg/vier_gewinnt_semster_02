@@ -22,15 +22,15 @@ int main()
 
     s.setPlayer(imene);
     // DIAGONAL: test 1: linsk oben nach rechts unten
-    liste = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4};
+    //liste = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4};
 
     // DIAGONAL: test 2: rechts oben nach links unten
     liste = {7, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4};
 
     // DIAGONAL: test 3: links unten nach rechts oben
-    liste = {2, 3, 3, 4, 4, 4, 5, 5, 5, 5};
+   liste = {2, 3, 3, 4, 4, 4, 5, 5, 5, 5};
 
-    // DIAGONAL:test 4: rechts unten nach linsk oben
+     //DIAGONAL:test 4: rechts unten nach linsk oben
     liste = {6, 5,5,4,4,3,3,3};
 
     
@@ -53,13 +53,13 @@ int main()
     liste = {2, 3, 4, 5, 1};
 
     // DIAGONAL: test 4: rechts unten nach linsk oben
-    liste = {6, 5, 4, 7};
+    liste = {6, 5, 4, 7,4};
 
     // Horizontal
-    liste = {3,3,3,3};
+   liste = {3,3,3,3};
 
     // vertikal
-    liste = {7,7,7,6,6,5,4};
+    // liste = {7,7,7,6,6,5,4};
 
     for (int i = 0; i < liste.size(); i++)
         s.setRing(liste[i]);

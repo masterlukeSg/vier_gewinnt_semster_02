@@ -14,6 +14,7 @@ namespace vierGewinnt
     public:
         
         Spieler(std::string name_,  std::string symbol_)
+
             : name(name_), symbol(symbol_) {}
 
         std::string getName() const;

@@ -28,11 +28,9 @@ include_directories(include)
 # Baue das Programm 'demo1' aus den genannten Quelldateien
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 add_executable(demo1
-  examples/main.cpp
+  examples/main2.cpp
   ${SRC_FILES}
 )
-
-add_executable(lobby1 examples/main2.cpp)
 
 #pybind11_add_module(hangman
 #  examples/demo_pybind.cpp
