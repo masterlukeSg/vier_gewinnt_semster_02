@@ -2,7 +2,7 @@
 #include <vector>
 #include "../include/Spieler.hpp"
 #include "../include/Spielbrett.hpp"
-#include "../include/Lobby.hpp"
+#include "../include/lobby.hpp"
 
 namespace vierGewinnt
 {

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "../include/Lobby.hpp"
+#include "../include/lobby.hpp"
 
 using namespace vierGewinnt;
 
