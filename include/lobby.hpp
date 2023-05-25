@@ -18,7 +18,7 @@ namespace vierGewinnt
 
         Lobby();
 
-        void createNewPlayer(std::string name1, std::string symbol1);
+        void createNewPlayer(std::string name, std::string symbol);
         
 
         Spielbrett createNewGame();
