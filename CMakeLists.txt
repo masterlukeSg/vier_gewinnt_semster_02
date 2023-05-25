@@ -32,8 +32,6 @@ add_executable(demo1
   ${SRC_FILES}
 )
 
-add_executable(lobby1 examples/main2.cpp)
-
 #pybind11_add_module(hangman
 #  examples/demo_pybind.cpp
 #  ${SRC_FILES}
