@@ -2,17 +2,18 @@
 #include <vector>
 #include "../include/Spieler.hpp"
 #include "../include/Spielbrett.hpp"
-#include "../include/lobby.hpp"
+#include "../include/Lobby.hpp"
 
 namespace vierGewinnt
 {
-    Lobby::Lobby()
-    {
+    Lobby::Lobby(){
+        
     }
 
-    void Lobby::createNewPlayer(std::string name, std::string symbol_)
+    Spieler Lobby::createNewPlayer(std::string name, std::string symbol_)
     {
-        Spieler spieler = Spieler(name, symbol_);
+        vierGewinnt::Spieler spieler = vierGewinnt::Spieler(name, symbol_);
+        return spieler;
     }
 
     Spielbrett Lobby::createNewGame()

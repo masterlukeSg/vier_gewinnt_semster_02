@@ -7,8 +7,8 @@ using namespace vierGewinnt;
 int main()
 {
 
-    Lobby spiel1;
+    vierGewinnt::Lobby spiel1 = vierGewinnt::Lobby();
 
-    spiel1.createNewPlayers("Lukas", "LU");
+    spiel1.createNewPlayer("Lukas", "LU");
     spiel1.createNewGame();
 }
