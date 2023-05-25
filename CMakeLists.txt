@@ -31,7 +31,7 @@ include_directories(include)
 # Baue das Programm 'demo1' aus den genannten Quelldateien
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 add_executable(demo1
-  examples/main.cpp
+  examples/main2.cpp
   ${SRC_FILES}
 )
 
