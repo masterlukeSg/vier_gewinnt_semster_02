@@ -9,12 +9,15 @@ using namespace vierGewinnt;
 
 int main (){
 
-    vierGewinnt::Lobby spiel1;
+    Lobby spiel1;
 
-    spiel1.createNewPlayer("Imene", "X");
+    spiel1.createNewPlayers("Lukas", "LU");
+    spiel1.createNewGame();
 
 
-    spiel1.createNewPlayer("Lukas", "O");
+    
+
+
 
 
 

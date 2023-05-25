@@ -1,22 +1,27 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
-#include "../include/Spieler.hpp"
-#include "../include/Spielbrett.hpp"
+#include "Spieler.hpp"
+#include "Spielbrett.hpp"
 
 namespace vierGewinnt
 {
     class Lobby
     {
     private:
-        std::vector<Spieler> spielerListe;
-        std::vector<Spielbrett> spielListe;
+        //std::vector<Spieler> spielerListe;
+        //std::vector<Spielbrett> spielListe;
+        Spieler spieler;
 
     public:
-        Lobby ()= default;
-        void createNewPlayer(const std::string& name, const std::string& symbol_);
+
+        Lobby();
+
+        void createNewPlayer(std::string name1, std::string symbol1);
         
 
-        void createNewGame(const Spieler& spieler1, const Spieler& spieler2);
+        Spielbrett createNewGame();
         
 
        

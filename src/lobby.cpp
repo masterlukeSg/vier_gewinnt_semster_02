@@ -4,22 +4,27 @@
 #include "../include/Spielbrett.hpp"
 #include "../include/lobby.hpp"
 
+
+
 namespace vierGewinnt
 {
-  
-        void createNewPlayer(const std::string& name, const std::string& symbol_)
+        
+
+        Lobby::Lobby(){
+          
+        }
+        void Lobby::createNewPlayer(std::string name1, std::string symbol1)
         {
-            Spieler spieler= Spieler(name, symbol_);
-            spielerListe.push_back(spieler);
+            spieler = Spieler(name1, symbol1);
+
+            //spielerListe.push_back(spieler);
         }
 
-        void createNewGame(const Spieler& spieler1, const Spieler& spieler2)
+        Spielbrett Lobby::createNewGame()
         {
             Spielbrett spielbrett= Spielbrett();
-            spielbrett.setPlayer(spieler1);
-            spielbrett.setPlayer(spieler2);
-
-            spielListe.push_back(spielbrett);
+            return spielbrett;
+            //spielListe.push_back(spielbrett);
         }
 
        
