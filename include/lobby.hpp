@@ -12,6 +12,7 @@ namespace vierGewinnt
         std::vector<Spielbrett> spielListe;
 
     public:
+        Lobby ()= default;
         void createNewPlayer(const std::string& name, const std::string& symbol_);
         
 
