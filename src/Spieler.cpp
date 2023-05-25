@@ -6,7 +6,9 @@
 namespace vierGewinnt
 {
     
-        
+            
+
+
         std::string Spieler::getName() const
         {
             return name;

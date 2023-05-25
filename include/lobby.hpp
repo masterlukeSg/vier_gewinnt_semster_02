@@ -8,15 +8,12 @@ namespace vierGewinnt
     class Lobby
     {
     private:
-        std::vector<Spieler> spielerListe;
-        std::vector<Spielbrett> spielListe;
 
     public:
-        Lobby ()= default;
-        void createNewPlayer(const std::string& name, const std::string& symbol_);
-        
+        Lobby();
+        void createNewPlayer(std::string name,  std::string symbol_);
 
-        void createNewGame(const Spieler& spieler1, const Spieler& spieler2);
+        Spielbrett createNewGame();
         
 
        

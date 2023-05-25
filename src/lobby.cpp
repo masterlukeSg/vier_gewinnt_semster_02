@@ -6,21 +6,19 @@
 
 namespace vierGewinnt
 {
-  
-        void createNewPlayer(const std::string& name, const std::string& symbol_)
-        {
-            Spieler spieler= Spieler(name, symbol_);
-            spielerListe.push_back(spieler);
-        }
+    Lobby::Lobby()
+    {
+    }
 
-        void createNewGame(const Spieler& spieler1, const Spieler& spieler2)
-        {
-            Spielbrett spielbrett= Spielbrett();
-            spielbrett.setPlayer(spieler1);
-            spielbrett.setPlayer(spieler2);
+    void Lobby::createNewPlayer(std::string name, std::string symbol_)
+    {
+        Spieler spieler = Spieler(name, symbol_);
+    }
 
-            spielListe.push_back(spielbrett);
-        }
+    Spielbrett Lobby::createNewGame()
+    {
+        Spielbrett spielbrett = Spielbrett();
+        return spielbrett;
+    }
 
-       
-}  
+}
