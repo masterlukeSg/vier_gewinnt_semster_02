@@ -99,7 +99,7 @@ namespace vierGewinnt
 
         // vertikal untersuchen
         int counter = 0;
-        /*
+
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
             for (string names : matrixBoard[i])
@@ -141,7 +141,7 @@ namespace vierGewinnt
             counter = 0;
             d++;
         }
-*/
+
         // braucht man das eigentlich???
         auto getPosition = getGesetzterRingPosition();
 
@@ -149,20 +149,21 @@ namespace vierGewinnt
         int positionInt = std::get<1>(getPosition);
 
         counter = 0;
+        // positionInt soll man bearbeiten können. position nicht
         positionInt = position;
 
         // diagonal untersuchen
-        if (positionInt == 0)
+        if (position == 0 || position == 5)
         {
-            // nur nach oben
-
-            // nach rechts checken 
-            if (matrix <= 4)
-            {   
+            // erster Try ueberprueft die diagonale nach rechts und die zweite nach links
+            int trys = 0;
+            while (trys != 2)
+            {
+                // durch "i++" wird, wenn unten nicht i-2, nach rechts oben die diagonale ueberprueft
                 for (int i = matrix; i < matrixBoard.size(); i++)
-                {   
+                {
                     // gitb es im Array überhaupt ein Element, dass in unserer Range liegt
-                    if (matrixBoard[i].size() >= positionInt)
+                    if (matrixBoard[i].size() > positionInt)
                     {
                         // Ite Matrix am Punkt positionInt checken, ob Ring ist: counter erhöhen
                         if (matrixBoard[i][positionInt] == ring)
@@ -171,27 +172,29 @@ namespace vierGewinnt
                         else
                             counter = 0;
                     }
-                    // positionInt proportional zum nächsten Array erhöhre. Somit geht man die Diagonale ab
-                    positionInt++;
+
+                    // wenn letzter eingesetzter Wert beim Array Vier oder
+                    if (matrix >= 4 && trys == 1)
+                        i = i - 2;
+
+                    // positionInt proportional zum nächsten Array erhöhre. Somit geht man die (rechte/line) Diagonale ab
+                    // abfrage position, weil positionInt bearbietet wird
+                    if (position == 0)
+                        positionInt++;
+
+                    // positionInt proportional zum nächsten Array verringert. Somit geht man die (rechte/line) Diagonale ab
+                    else if (position == 5)
+                        positionInt--;
+
+                    // wenn counter größer gleich 4, ist das Spiel zuende und ring spieler hat gewonnen
+                    if (counter >= 4)
+                        return ring;
                 }
+                trys++;
+                // reset: positionInt muss wieder auf position gesetzt werden. Jetz wird Links diagonal ueberprueft
+                positionInt = position;
+                counter = 0;
             }
-            //nach links checken
-            else if (matrix >= 4)
-            {
-            }
-
-
-
-            if (counter >= 4)
-                return ring;
-
-            positionInt = 0;
-            counter = 0;
-        }
-
-        else if (position == 5)
-        {
-            // nur nach unten
         }
 
         else
