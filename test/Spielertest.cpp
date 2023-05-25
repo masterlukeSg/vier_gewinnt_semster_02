@@ -2,6 +2,7 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <gtest/gtest.h>
 
 using namespace vierGewinnt;
 
@@ -14,7 +15,7 @@ TEST(Spieler,getName())
 }
 
 TEST(Spieler,Spieler()){
-Spieler <string> spiel= Spieler<string>();
+//Spieler <string> spiel= Spieler<string>();
 std::string Spieler Aicha= Spieler("Aicha");
 std::string Spieler Aicha= Spieler ("Imene");
 
