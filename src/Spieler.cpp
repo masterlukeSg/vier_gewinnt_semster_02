@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+
 namespace vierGewinnt
 {
     std::string Spieler::getName() const
