@@ -6,7 +6,8 @@
 
 namespace vierGewinnt
 {
-    Lobby::Lobby(){
+    Lobby::Lobby()
+    {
     }
 
     Spieler Lobby::createNewPlayer(std::string name, std::string symbol_)

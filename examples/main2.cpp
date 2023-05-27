@@ -9,7 +9,7 @@ int main()
 
     vierGewinnt::Lobby spiel1 = vierGewinnt::Lobby();
 
-   Spieler s =  spiel1.createNewPlayer("Lukas", "LU");
+    Spieler s = spiel1.createNewPlayer("Lukas", "LU");
     spiel1.createNewGame();
 
     std::cout << s.getName() << std::endl;

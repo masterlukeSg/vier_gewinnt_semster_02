@@ -99,7 +99,7 @@ namespace vierGewinnt
 
         // vertikal untersuchen
         int counter = 0;
-
+        /*
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
             for (string names : matrixBoard[i])
@@ -141,26 +141,23 @@ namespace vierGewinnt
             counter = 0;
             d++;
         }
-
+        */
         // braucht man das eigentlich???
         auto getPosition = getGesetzterRingPosition();
 
         int matrixInt = std::get<0>(getPosition);
         int positionInt = std::get<1>(getPosition);
 
-        counter = 0;
-        // positionInt soll man bearbeiten können. position nicht
-        positionInt = position;
-
         // diagonal untersuchen
-        if (position == 0 || position == 5)
+        if (positionInt == 0 || positionInt == 5)
         {
             // erster Try ueberprueft die diagonale nach rechts und die zweite nach links
             int trys = 0;
+            int counter = 0;
             while (trys != 2)
             {
                 // durch "i++" wird, wenn unten nicht i-2, nach rechts oben die diagonale ueberprueft
-                for (int i = matrix; i < matrixBoard.size(); i++)
+                for (int i = matrixInt; i < matrixBoard.size(); i++)
                 {
                     // gitb es im Array überhaupt ein Element, dass in unserer Range liegt
                     if (matrixBoard[i].size() > positionInt)
@@ -173,8 +170,8 @@ namespace vierGewinnt
                             counter = 0;
                     }
 
-                    // wenn letzter eingesetzter Wert beim Array Vier oder
-                    if (matrix >= 4 && trys == 1)
+                    // wenn letzter eingesetzter Wert beim Array Vier oder trys == 1
+                    if (matrixInt >= 4 && trys == 1)
                         i = i - 2;
 
                     // positionInt proportional zum nächsten Array erhöhre. Somit geht man die (rechte/line) Diagonale ab
@@ -199,6 +196,71 @@ namespace vierGewinnt
 
         else
         {
+
+            int matrixInt = std::get<0>(getPosition);
+            int positionInt = std::get<1>(getPosition);
+            int counter = 0;
+            std::cout << positionInt << " Matrixboard: " << matrixInt << std::endl;
+
+            // 4 trys:
+            // 0->1: rechts oben + 1->2 links unten. Danach counter reseten
+            // 2->3: links oben + 3->4 rechts unten. Danach counter reseten
+
+            int trys = 0;
+            bool goOn = true;
+            while (trys != 4)
+            {
+                std::cout << "Try: " << trys << " GOON: " << goOn << " positionInt: " << positionInt;
+                std::cout << " matrixInt: " << matrixInt << std::endl;
+
+                for (int board = matrixInt; board < matrixBoard.size(); board++)
+                {
+
+                    if (matrixBoard[board].size() > positionInt)
+                    {
+                        // Ite Matrix am Punkt positionInt checken, ob Ring ist: counter erhöhen
+                        if (matrixBoard[board][positionInt] == ring && goOn)
+                            counter++;
+                        else
+                            goOn = false;
+                    }
+
+                    if (trys == 0)
+                    {
+                        positionInt++;
+                    }
+
+                    else if (trys == 1)
+                    {
+                        board = board - 2;
+                        positionInt--;
+                    }
+                    else if (trys == 2)
+                    {
+                        positionInt++;
+                        board = board - 2;
+                    }
+
+                    else if (trys == 3)
+                    {
+                        positionInt--;
+                    }
+                    if (counter >= 4)
+                    {
+                        return ring;
+                    }
+                }
+                trys++;
+
+                std::cout <<"Counte: " <<counter << std::endl;
+                goOn = true;
+
+                if (trys == 2)
+                {
+                    counter = 0;
+                    positionInt = position;
+                }
+            }
         }
 
         int matrixBoardGroeße = 0;

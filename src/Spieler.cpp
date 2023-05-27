@@ -2,19 +2,16 @@
 #include <iostream>
 #include <string>
 
-
 namespace vierGewinnt
 {
-        std::string Spieler::getName() const
-        {
-            return name;
-        }
+    std::string Spieler::getName() const
+    {
+        return name;
+    }
 
-        std::string Spieler::getSymbol() const
-        {
-            return symbol;
-        }
+    std::string Spieler::getSymbol() const
+    {
+        return symbol;
+    }
 
-        
-    
 }

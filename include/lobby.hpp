@@ -12,10 +12,7 @@ namespace vierGewinnt
     public:
         Lobby();
 
-        
-
         Spieler createNewPlayer(std::string name1, std::string symbol1);
-
 
         Spielbrett createNewGame();
     };
