@@ -24,9 +24,14 @@ namespace vierGewinnt
         matrixBoard[0] = spaltenName;
     }
 
-    void Spielbrett::setPlayer(vierGewinnt::Spieler player)
+    void Spielbrett::setPlayer(vierGewinnt::Spieler player_)
     {
-        ring = player.getSymbol();
+        player = player_;
+        ring = player_.getSymbol();
+    }
+    
+    Spieler Spielbrett::getPlayer(){
+        return player;
     }
 
     string Spielbrett::print()

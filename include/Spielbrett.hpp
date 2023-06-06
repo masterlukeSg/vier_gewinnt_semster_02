@@ -15,7 +15,7 @@ namespace vierGewinnt
         int matrix, position;
         std::string ring, unentschieden;
         std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
-
+        Spieler player;
         /**
          * @brief Breite: 7, Höhe: 6
          */
@@ -52,6 +52,10 @@ namespace vierGewinnt
          * @param Position
          * @return Position erlaubt (true) oder nicht (false)
          */
+
+        Spieler getPlayer();
+
+
         bool setRing(int Position);
         /**
          * @brief Gibt das Spielbrett wieder
