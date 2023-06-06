@@ -30,7 +30,7 @@ namespace vierGewinnt
         ring = player_.getSymbol();
     }
     
-    Spieler Spielbrett::getSpieler(){
+    Spieler Spielbrett::getPlayer(){
         return player;
     }
 

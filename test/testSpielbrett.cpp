@@ -1,13 +1,16 @@
 #include <gtest/gtest.h>
 #include <iostream>
+#include <../src/Spieler.cpp>
 #include <../src/Spielbrett.cpp>
 
 
 using namespace vierGewinnt;
 
-TEST (Spielbrett, Spielbrett()){
+TEST (Spielbrett, setPlayer()){
     Spielbrett board;
-    board.print();
+    Spieler player("Lukas", "LU")
+    board.setPlayer(player)
+    EXPECT_EQ(getPlayer().getSymbol, "Lukas");
 }
 
-TEST (Spielbrett,)
+TEST (Spielbrett,setPlayer)
