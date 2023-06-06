@@ -231,7 +231,7 @@ namespace vierGewinnt
             coordinateInBoard = position;
             goOn = true;
             alreadyCounted = false;
-            
+
             if (trys == 2)
                 boardAndCoordinateVector.clear();
         }

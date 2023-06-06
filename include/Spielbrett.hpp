@@ -12,7 +12,6 @@ namespace vierGewinnt
     class Spielbrett
     {
     private:
-    
         int matrix, position;
         std::string ring, unentschieden;
         std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
@@ -23,8 +22,8 @@ namespace vierGewinnt
         std::vector<std::vector<std::string>> matrixBoard{spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben};
         /**
          * @brief Überprüft ob man den Ring an der Position platzieren darf
-         * 
-         * @param Position 
+         *
+         * @param Position
          * @return true
          * @return false
          */
@@ -38,25 +37,25 @@ namespace vierGewinnt
         Spielbrett();
         /**
          * @brief Überprüft ob ein Spieler 4 Ringe horizontal,vertikal oder diagonal platziert hat
-         * @return Gewinner des Spiels 
+         * @return Gewinner des Spiels
          */
         std::string whoIsWinning();
         /**
          * @brief Setzt Ring auf Namen des aktuellen Spieler
-         * 
-         * @param player 
+         *
+         * @param player
          */
         void setPlayer(Spieler player);
         /**
          * @brief Übergibt dem legalMove fkt die Position und setzt es danach an die gewünschte Position
-         * 
-         * @param Position 
+         *
+         * @param Position
          * @return Position erlaubt (true) oder nicht (false)
          */
         bool setRing(int Position);
         /**
          * @brief Gibt das Spielbrett wieder
-         * 
+         *
          * @return Spielbrett
          */
         std::string print();
