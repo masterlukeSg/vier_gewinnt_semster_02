@@ -26,13 +26,13 @@ namespace vierGewinnt
 
     void Spielbrett::setPlayer(vierGewinnt::Spieler player_)
     {
-        player = player_;
+        //player = player_;
         ring = player_.getSymbol();
     }
     
-    Spieler Spielbrett::getPlayer(){
-        return player;
-    }
+    //Spieler Spielbrett::getPlayer(){
+        //return player;
+    //}
 
     string Spielbrett::print()
     {

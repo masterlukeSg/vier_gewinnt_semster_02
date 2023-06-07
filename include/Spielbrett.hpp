@@ -15,7 +15,6 @@ namespace vierGewinnt
         int matrix, position;
         std::string ring, unentschieden;
         std::vector<std::string> spaltenName, eins, zwei, drei, vier, fuenf, sechs, sieben;
-        Spieler player;
         /**
          * @brief Breite: 7, Höhe: 6
          */
