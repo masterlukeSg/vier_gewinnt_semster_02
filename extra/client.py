@@ -26,8 +26,7 @@ def main():
 
     pprint(f"Text Nachricht von den coolste: '{vierGewinnt.__doc__}'")
 
-    
-
+  
 
 
 main()
