@@ -26,7 +26,7 @@ PYBIND11_MODULE(vierGewinnt, m)
   py::class_<Spielbrett>(m, "Spielbrett")
       .def(py::init<>())
       .def("setRing", &Spielbrett::setRing)
-      .def("legalMove", &Spielbrett::whoIsWinning)
+      .def("whoIsWinning", &Spielbrett::whoIsWinning)
       .def("setPlayer", &Spielbrett::setPlayer)
       .def("print", &Spielbrett::print);
 }
