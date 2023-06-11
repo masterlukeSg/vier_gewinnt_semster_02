@@ -20,11 +20,35 @@ from pprint import pprint
 def main():
     base_api_url = "http://127.0.0.1:8000"
 
-    response = requests.get(base_api_url)
-    response_json = response.json()
-    print(f"Current guess: '{response_json}'")
+    response = requests.get(base_api_url).json()
+    response_json = response["information"]
+    pprint(f"{response_json}")
 
-    pprint(f"Text Nachricht von den coolste: '{vierGewinnt.__doc__}'")
+    response_json = requests.get(f"{base_api_url}/addPlayer/Lukas/XX").json()
+    current_guess = response_json['information']
+    pprint(f'{current_guess}')
+    
+    response_json = requests.get(f"{base_api_url}/addPlayer/Clara/00").json()
+    current_guess = response_json['information']
+    pprint(f'{current_guess}')
+    
+    response_json = requests.get(f"{base_api_url}/play/setRing/Lukas/3").json()
+    current_guess = response_json['information']
+    pprint(f'{current_guess}')
+
+    response_json = requests.get(f"{base_api_url}/play/Board").json()
+    current_guess = response_json['information']
+    print(f'{current_guess}')
+    
+    response_json = requests.get(f"{base_api_url}/play/whoIsWinning").json()
+    current_guess = response_json['information']
+    print(f'{current_guess}')
+    
+    
+    
+
+
+    print(f"Text Nachricht von den coolste: '{vierGewinnt.__doc__}'")
 
   
 

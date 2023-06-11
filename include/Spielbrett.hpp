@@ -55,9 +55,6 @@ namespace vierGewinnt
          * @return Position erlaubt (true) oder nicht (false)
          */
 
-        Spieler getPlayer();
-
-
         bool setRing(int Position);
         /**
          * @brief Gibt das Spielbrett wieder

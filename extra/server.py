@@ -25,7 +25,8 @@ counter = 0
 
 @app.get("/")
 async def homePage():
-    return {f' information": "Willkommen bei Viergewinnt. \nIn dieser Lobby sind aktuell "{len(playerNames)}" Spieler.'} 
+    txtNachricht = f"Willkommen bei Viergewinnt. \nIn dieser Lobby sind aktuell {len(playerNames)} Spieler."
+    return {"information": txtNachricht} 
 
 # Spieler hinzufügen
 @app.get("/addPlayer/{userName}/{userSymbol}")
@@ -55,9 +56,9 @@ async def AddUser(userName : str, userSymbol: str):
 
 
 # Spielbrett wiedergeben
-@app.get("/print/board")
+@app.get("/play/Board")
 async def get_user_by_id():
-    return {"information" : "sb.print()"}
+    return {"information" : sb.print()}
 
 
 # Gewinner des Spiels
@@ -71,7 +72,7 @@ async def getWinner():
             game = False
             return {"information": sb.whoIsWinning(), "status" : True}
         else:
-            return {"information": sb.whoIsWinning(), "status" : False}
+            return {"information": "Es gibt noch keinen Gewinner", "status" : False}
 
 
 # Spieler kann einen Ring hinzufuegen

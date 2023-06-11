@@ -28,11 +28,7 @@ namespace vierGewinnt
     {
         //player = player_;
         ring = player_.getSymbol();
-    }
-    
-    //Spieler Spielbrett::getPlayer(){
-        //return player;
-    //}
+    } 
 
     string Spielbrett::print()
     {

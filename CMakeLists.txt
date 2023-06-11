@@ -33,34 +33,42 @@ pybind11_add_module(vierGewinnt
   examples/demo_vierGewinnt.cpp
   ${SRC_FILES}
 )
-
-
 ## Installiere die Bibliothek
 install(TARGETS vierGewinnt
   COMPONENT python
   LIBRARY DESTINATION "${PROJECT_SOURCE_DIR}/extra")
-  
+
+
+
+### Google Test
+
+# Use CMakes FetchContent
 include(FetchContent)
- if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
-    cmake_policy(SET CMP0135 NEW)
+# Workaround for CMake >= 3.24
+# Avoid warning about DOWNLOAD_EXTRACT_TIMESTAMP
+if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
+  cmake_policy(SET CMP0135 NEW)
 endif()
 
+# Download GoogleTest (we use version 1.12.1)
 FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
 )
-
-
+# Workaround for Windows:
+# Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
+# Include CMake configuration of GoogleTest
 FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
 
+# Enable GoogleTest
 enable_testing()
 
+
 add_executable(test1 test/testSpielbrett.cpp)
+
 target_link_libraries(test1 GTest::gtest_main)
 gtest_discover_tests(test1)
-
-
 
