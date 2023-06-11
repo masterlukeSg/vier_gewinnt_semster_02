@@ -1,4 +1,4 @@
-/*
+
 #include <gtest/gtest.h>
 #include "../src/Spieler.cpp"
 #include "../src/Spielbrett.cpp"
@@ -12,4 +12,3 @@ TEST(Spielbrett, setRing)
     board.setPlayer(player);
     EXPECT_EQ(board.setRing(4), true);
 }
-*/

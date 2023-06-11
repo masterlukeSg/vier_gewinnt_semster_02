@@ -8,7 +8,9 @@
 using namespace std;
 using namespace vierGewinnt;
 
-// cmake -S . -B build && cmake --build build && cmake --install build
+// cmake -S . -B build && cmake --build build  
+
+
 
 int main()
 {
