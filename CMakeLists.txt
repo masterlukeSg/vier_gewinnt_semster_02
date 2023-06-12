@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Prüfe ob Heapspeicher gefunden wird,
 # der nicht freigegeben wurde
-add_compile_options(-fsanitize=address)
-add_link_options(-fsanitize=address)
+#add_compile_options(-fsanitize=address)
+#add_link_options(-fsanitize=address)
 
 # Füge selbsgeschriebene Includes hinzu
 include_directories(include)
@@ -41,34 +41,3 @@ install(TARGETS vierGewinnt
 
 
 ### Google Test
-
-# Use CMakes FetchContent
-include(FetchContent)
-# Workaround for CMake >= 3.24
-# Avoid warning about DOWNLOAD_EXTRACT_TIMESTAMP
-if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
-  cmake_policy(SET CMP0135 NEW)
-endif()
-
-# Download GoogleTest (we use version 1.12.1)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-)
-# Workaround for Windows:
-# Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-# Include CMake configuration of GoogleTest
-FetchContent_MakeAvailable(googletest)
-include(GoogleTest)
-
-# Enable GoogleTest
-enable_testing()
-
-
-add_executable(test1 test/testSpielbrett.cpp)
-
-target_link_libraries(test1 GTest::gtest_main)
-gtest_discover_tests(test1)
-

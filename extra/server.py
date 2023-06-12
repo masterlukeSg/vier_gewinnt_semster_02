@@ -110,9 +110,10 @@ async def setRing(position: int, player: str):
 @app.get("/play/werIstDran")
 async def setRing():
     global counter
-    if (counter == 1 and len(playerNames) == 1):
-        return {"information": playerNames[1].getName()}
-    return {"information": playerNames[0].getName()}
+
+    if (counter == 1 and len(playerNames) == 2):
+        return {"information": playerNames[1]}
+    return {"information": playerNames[0]}
 
 
 
