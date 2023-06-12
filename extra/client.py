@@ -73,29 +73,33 @@ def game():
         None
         ## printe information
     run = True
+    nichtspamen = 0
     while(run):
-       response = requests.get(f"{base_api_url}/play/werIstDran").json()
+        if (nichtspamen == 0):
+            response = requests.get(f"{base_api_url}/play/werIstDran").json()
 
-       if (response["information"] == username):
+        if (response["information"] == username):
             response = requests.get(f"{base_api_url}/play/Board").json()
             ### printet board 
-            pprint(response["information"])
+            print(response["information"])
 
             position = input("In welche Spalte willst du deinen Ring platzieren:")
             response = requests.get(f"{base_api_url}/play/setRing/{username}/{position}").json()
             
             ### Wenn False, dann ist Eingabe ungültig und man bleibt in der Schleif
-            while (not requests["status"]):
+            while (not response["status"]):
                 position = input("Deine Eingabe war fehlerhaft. Versuch es erneut:")
                 response = requests.get(f"{base_api_url}/play/setRing/{username}/{position}").json()
-
+            
             response = requests.get(f"{base_api_url}/play/Board").json()
+            nichtspamen = 1
             ### printet board 
-            pprint(response["information"])
+            print(response["information"])
         
-       else:
-           print("Du bist nicht dran! Warte auf den anderen Spieler sein Ring zu platzieren")
-
+        else:
+            if (nichtspamen == 0):
+                print("Du bist nicht dran! Warte auf den anderen Spieler sein Ring zu platzieren")
+                nichtspamen = 1
 
             
        #response= requests.get(f"{base_api_url}/play/setRing/{username}/{dein_symbol}").json()
