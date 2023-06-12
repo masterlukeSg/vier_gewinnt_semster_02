@@ -26,7 +26,8 @@ counter = 0
 @app.get("/")
 async def homePage():
     txtNachricht = f"Willkommen bei Viergewinnt. \nIn dieser Lobby sind aktuell {len(playerNames)} Spieler."
-    return {"information": txtNachricht} 
+    return {"information": txtNachricht,
+            "symbols" : allSymbols} 
 
 # Spieler hinzufügen
 @app.get("/addPlayer/{userName}/{userSymbol}")
@@ -103,6 +104,16 @@ async def setRing(position: int, player: str):
             "status": True}
     else:
         return {"information" : "Du bist gerade nicht dran. Warte bis du dran bist"}
+
+
+
+@app.get("/play/werIstDran")
+async def setRing():
+    global counter
+    if (counter == 0):
+        return {"information": playerOne.getName()}
+    return {"information": playerTwo.getName()}
+
 
 
 
