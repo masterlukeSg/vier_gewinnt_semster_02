@@ -26,7 +26,8 @@ counter = 0
 @app.get("/")
 async def homePage():
     txtNachricht = f"Willkommen bei Viergewinnt. \nIn dieser Lobby sind aktuell {len(playerNames)} Spieler."
-    return {"information": txtNachricht} 
+    return {"information": txtNachricht,
+            "symbols" : allSymbols} 
 
 # Spieler hinzufügen
 @app.get("/addPlayer/{userName}/{userSymbol}")
