@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Prüfe ob Heapspeicher gefunden wird,
 # der nicht freigegeben wurde
-#add_compile_options(-fsanitize=address)
-#add_link_options(-fsanitize=address)
+add_compile_options(-fsanitize=address)
+add_link_options(-fsanitize=address)
 
 # Füge selbsgeschriebene Includes hinzu
 include_directories(include)

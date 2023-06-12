@@ -10,7 +10,7 @@ namespace vierGewinnt
     class Lobby
     {
     public:
-        Lobby();
+        Lobby(); 
 
         Spieler createNewPlayer(std::string name1, std::string symbol1);
 
