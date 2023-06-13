@@ -140,8 +140,10 @@ async def setRing():
     global counter
 
     if (counter == 1 and len(playerNames) == 2):
-        return {"information": playerNames[1]}
-    return {"information": playerNames[0]}
+        return {"information": playerNames[1], "status" : True}
+    elif (counter == 0 and len(playerNames) == 2):
+        return {"information": playerNames[0], "status" : True}
+    return {"information" : "Warte auf weitere Spieler", "status" : False}
 
 
 
