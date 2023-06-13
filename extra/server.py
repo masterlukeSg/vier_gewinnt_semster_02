@@ -138,7 +138,8 @@ async def setRing(position: int, player: str):
 @app.get("/play/werIstDran")
 async def setRing():
     global counter
-
+# wenn der counter auf 1 gesetzt ist, ist der zweite Spieler dran:
+# sonst wenn der counter auf 0 ist, ist der erste Spieler dran 
     if (counter == 1 and len(playerNames) == 2):
         return {"information": playerNames[1], "status" : True}
     elif (counter == 0 and len(playerNames) == 2):
