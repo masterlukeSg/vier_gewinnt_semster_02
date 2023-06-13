@@ -1,16 +1,10 @@
-try:
-  import vierGewinnt
-except ImportError as e:
-  print(f"Importing the shared library 'hangman' did not work.")
-  print(f"Is (a link to) the shared library 'hangman.____.so' in the same directory as this python script?")
-  print(f"The import caused the following exception '{e}'")
-  print(f"Exiting")
-  exit(1)
 
+import vierGewinnt
 from vierGewinnt import Spielbrett
 from typing import Union
 import os
 import uvicorn
+import time
 from fastapi import FastAPI
 
 import requests
@@ -53,6 +47,9 @@ def main():
 def game():
     response=requests.get(base_api_url).json()
     print(response["information"])
+    response=requests.get(f"{base_api_url}/joinGame").json()
+    print(response["information"])
+    gameID= response["gameID"]
 
     symbols = response["symbols"]
     username = input("Gib deinen Namen ein:")
@@ -65,31 +62,33 @@ def game():
     
 
     
-    response = requests.get(f"{base_api_url}/addPlayer/{username}/{dein_symbol}").json()
-    if (not response["status"]): 
-        None
+    response = requests.get(f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}").json()
+    while(not response["status"]): 
+        print(response["information"])       
+        time.sleep(9.0)
+       
         ## printe information
     
     run = True
     nichtspamen = 0
     while(run):
         if (nichtspamen == 0):
-            response = requests.get(f"{base_api_url}/play/werIstDran").json()
+            response = requests.get(f"{base_api_url}/play/{gameID}/werIstDran").json()
 
         if (response["information"] == username):
-            response = requests.get(f"{base_api_url}/play/Board").json()
+            response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
             ### printet board 
             print(response["information"])
 
             position = input("In welche Spalte willst du deinen Ring platzieren:")
-            response = requests.get(f"{base_api_url}/play/setRing/{username}/{position}").json()
+            response = requests.get(f"{base_api_url}/play/setRing/{gameID}/{username}/{position}").json()
             
             ### Wenn False, dann ist Eingabe ungültig und man bleibt in der Schleif
             while (not response["status"]):
                 position = input("Deine Eingabe war fehlerhaft. Versuch es erneut:")
-                response = requests.get(f"{base_api_url}/play/setRing/{username}/{position}").json()
+                response = requests.get(f"{base_api_url}/play/setRing/{gameID}/{username}/{position}").json()
             
-            response = requests.get(f"{base_api_url}/play/Board").json()
+            response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
             nichtspamen = 1
             ### printet board 
             print(response["information"])
