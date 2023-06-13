@@ -64,12 +64,12 @@ def game():
     while(true):
         dein_symbol = str(input(f"Wähle ein Symbol{symbols}:"))
         if (dein_symbol in symbols):
-           true = False
+           true = False ##symbol wurde hier schon gewählt
     
 
     
     response = requests.get(f"{base_api_url}/addPlayer/{username}/{dein_symbol}").json()
-    if (not response["status"]):
+    if (not response["status"]): 
         None
         ## printe information
     run = True
