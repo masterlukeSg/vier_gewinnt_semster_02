@@ -17,7 +17,8 @@ sb = lobby.createNewGame()
 
 ## players werden hier hinzugefuegt
 # wenn spiel gestartet, wird es geleert, damit ein neues Spiel gespielt werden kann
-playerNames, playerSymbols,playerList = [], [], []
+
+playerNames, playerSymbols, playerList = [], [], []
 allSymbols = ["XX", "00", "++", "**"]
 playerOne, playerTwo = None, None
 game = False

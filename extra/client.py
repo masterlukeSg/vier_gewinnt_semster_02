@@ -7,7 +7,6 @@ except ImportError as e:
   print(f"Exiting")
   exit(1)
 
-
 from vierGewinnt import Spielbrett
 from typing import Union
 import os
@@ -25,6 +24,7 @@ def main():
     response = requests.get(base_api_url).json()
     response_json = response["information"]
     pprint(f"{response_json}")
+
 
     response_json = requests.get(f"{base_api_url}/addPlayer/Lukas/XX").json()
     current_guess = response_json['information']
@@ -55,7 +55,7 @@ def main():
   
 def game():
     response=requests.get(base_api_url).json()
-    pprint(response["information"])
+    print(response["information"])
 
     symbols = response["symbols"]
     username = input("Gib deinen Namen ein:")
@@ -72,6 +72,7 @@ def game():
     if (not response["status"]):
         None
         ## printe information
+    
     run = True
     nichtspamen = 0
     while(run):
