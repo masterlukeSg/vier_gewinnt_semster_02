@@ -45,9 +45,6 @@ def main():
     response_json = requests.get(f"{base_api_url}/play/whoIsWinning").json()
     current_guess = response_json['information']
     print(f'{current_guess}')
-    
-    
-    
 
 
     print(f"Text Nachricht von den coolste: '{vierGewinnt.__doc__}'")
