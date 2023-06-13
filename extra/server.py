@@ -36,10 +36,12 @@ async def homePage():
 @app.get("/addPlayer/{userName}/{userSymbol}")
 async def AddUser(userName : str, userSymbol: str):
     global game, playerOne, playerTwo
+   
     # Wenn Nutzername bereits existiert soll der Spieler nicht hinzugefuegt werden
     if (userName in playerNames):
         return {"information" : "Spieler existiert bereits", "status" : False}
-    #Wenn das Symbol nicht in allSymbol drin ist soll der Spieler nicht hinzugefuegt werden
+    
+    # Wenn das Symbol nicht in allSymbol drin ist soll der Spieler nicht hinzugefuegt werden
     if (userSymbol not in allSymbols):
         return {"information": "Dieses Symbol existiert nicht"}
     
@@ -47,6 +49,9 @@ async def AddUser(userName : str, userSymbol: str):
     if (userSymbol in playerSymbols):
         return {"information" : "Ein nutzer besitzt das Symbol bereits"}
     
+    #Wenn es gar keinen oder einen Spieler gibt und das Game noch nicht gestartet hat dann:
+    #entfernt er das Usersymbol aus allSymbols und fuegt er einen neuen Spieler und Symbol hinzu:
+    # sonst gibt er aus, dass das Spiel schon gestartet hat
     if (len(playerNames) < 2 ):
         if (not game):
             allSymbols.remove(userSymbol)
@@ -55,6 +60,8 @@ async def AddUser(userName : str, userSymbol: str):
         else:
             return {"information": "Spiel hat schon gestartet",
             "status" : False}
+    #Wenn bereits zwei Spieler im Game sind, dann erstellt er zwei Spieler in c++:
+    #und fuegt sie in PlayerList hinzu und setzt das game und status auf true
     if (len(playerNames) == 2):
         playerOne = lobby.createNewPlayer(playerNames[0], playerSymbols[0])
         playerTwo = lobby.createNewPlayer(playerNames[1], playerSymbols[1])
@@ -82,6 +89,7 @@ async def getWinner():
     global game
     if (not game):
         return {"information": "Warten auf Spieler"}
+    #Wenn es einen Gewinner gibt wird das Spiel beendet und Gewinner ausgegeben, sonst wird weiter gespielt
     else:
         if (sb.whoIsWinning() != "unentschieden" and sb.whoIsWinning() != "null"):
             game = False
@@ -96,6 +104,7 @@ async def setRing(position: int, player: str):
     global counter
     if (not game):
         return {"information:": "Warten auf weitere Spieler..."}
+    # 
     if (counter == 0 and player == playerList[0].getName()):
         sb.setPlayer(playerOne)
         pos = sb.setRing(position)
