@@ -6,19 +6,26 @@ import vierGewinnt
 from vierGewinnt import Spielbrett, Lobby, Spieler
 from typing import Union
 import os
+import random
 import uvicorn
 from fastapi import FastAPI
 
 app = FastAPI()
 
+
+
+
 lobby = Lobby()
 sb = lobby.createNewGame()
+
+### Lists für mehrere Spielinstanzen 
+gameIdInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz , allSymbolsInstanz, counterInstanz = [],[],[],[],[],[],[]
 
 
 ## players werden hier hinzugefuegt
 # wenn spiel gestartet, wird es geleert, damit ein neues Spiel gespielt werden kann
 # playerList speichert, erstellte c++ spieler
-playerNames, playerSymbols,playerList = [], [], []
+playerNames, playerSymbols, playerList = [], [], []
 allSymbols = ["XX", "00", "++", "**"]
 playerOne, playerTwo = None, None
 game = False
@@ -31,7 +38,25 @@ async def homePage():
     return {"information": txtNachricht,
             "symbols" : allSymbols} 
 
-# 
+@app.get("/joinGame")
+async def joinGame():
+    for i in playerNamesInstanz:
+        if (len(i) == 1):
+            return {"information" : "Wir verbinden dich zu einem offenen Spiel",
+                    "gameID" :gameIdInstanz[i],
+                    "status": True}
+    
+    spielID = random.randint(0,10000000)
+    gameIdInstanz.append(spielID)
+    return {"information" : "Es wurde ein neues Spiel für dich erstellt", 
+            "gameID" : spielID, 
+            "status" :False}
+
+    
+
+
+
+
 # Spieler hinzufügen
 @app.get("/addPlayer/{userName}/{userSymbol}")
 async def AddUser(userName : str, userSymbol: str):
@@ -49,8 +74,8 @@ async def AddUser(userName : str, userSymbol: str):
     if (userSymbol in playerSymbols):
         return {"information" : "Ein nutzer besitzt das Symbol bereits"}
     
-    #Wenn es gar keinen oder einen Spieler gibt und das Game noch nicht gestartet hat dann:
-    #entfernt er das Usersymbol aus allSymbols und fuegt er einen neuen Spieler und Symbol hinzu:
+    # Wenn es gar keinen oder einen Spieler gibt und das Game noch nicht gestartet hat dann:
+    # entfernt er das Usersymbol aus allSymbols und fuegt er einen neuen Spieler und Symbol hinzu:
     # sonst gibt er aus, dass das Spiel schon gestartet hat
     if (len(playerNames) < 2 ):
         if (not game):
@@ -60,8 +85,9 @@ async def AddUser(userName : str, userSymbol: str):
         else:
             return {"information": "Spiel hat schon gestartet",
             "status" : False}
-    #Wenn bereits zwei Spieler im Game sind, dann erstellt er zwei Spieler in c++:
-    #und fuegt sie in PlayerList hinzu und setzt das game und status auf true
+
+    # Wenn bereits zwei Spieler im Game sind, dann erstellt er zwei Spieler in c++:
+    # und fuegt sie in PlayerList hinzu und setzt das game und status auf true
     if (len(playerNames) == 2):
         playerOne = lobby.createNewPlayer(playerNames[0], playerSymbols[0])
         playerTwo = lobby.createNewPlayer(playerNames[1], playerSymbols[1])
@@ -89,7 +115,8 @@ async def getWinner():
     global game
     if (not game):
         return {"information": "Warten auf Spieler"}
-    #Wenn es einen Gewinner gibt wird das Spiel beendet und Gewinner ausgegeben, sonst wird weiter gespielt
+
+    # Wenn es einen Gewinner gibt wird das Spiel beendet und Gewinner ausgegeben, sonst wird weiter gespielt
     else:
         if (sb.whoIsWinning() != "unentschieden" and sb.whoIsWinning() != "null"):
             game = False
@@ -104,10 +131,12 @@ async def setRing(position: int, player: str):
     global counter
     if (not game):
         return {"information:": "Warten auf weitere Spieler..."}
+
     # Wenn der Counter auf null ist und der player der erste Spieler ist dann wird der Ring gesetzt
     if (counter == 0 and player == playerList[0].getName()):
         sb.setPlayer(playerOne)
         pos = sb.setRing(position)
+
     # Wenn die Position schon besetzt ist, dann wird ausgegeben dass der Zug ungueltig ist:
     # und status auf null gesetzt, sonst wird  der counter auf eins gesetzt
         if (not pos):
@@ -117,11 +146,13 @@ async def setRing(position: int, player: str):
             counter = 1
             return {"information" : "Dein Ring wird positioniert",
             "status": True}
-    #Wenn der Counter gleich eins ist und der zweite Spieler dran ist, dann wird der RIng gesetzt
+
+    # Wenn der Counter gleich eins ist und der zweite Spieler dran ist, dann wird der RIng gesetzt
     elif (counter == 1 and playerList[1].getName()):
         sb.setPlayer(playerTwo)
         pos = sb.setRing(position)
-    ## Wenn die Position schon besetzt ist, dann wird ausgegeben dass der Zug ungueltig ist:
+
+    # Wenn die Position schon besetzt ist, dann wird ausgegeben dass der Zug ungueltig ist:
     # und status auf null gesetzt, sonst wird  der counter wieder auf null gesetzt
         if (not pos):
             return {"information": "Der Zug war ungültig, bitte versuche es erneut",
