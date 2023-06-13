@@ -31,11 +31,23 @@ async def homePage():
     return {"information": txtNachricht,
             "symbols" : allSymbols} 
 
+# 
 # Spieler hinzufügen
 @app.get("/addPlayer/{userName}/{userSymbol}")
 async def AddUser(userName : str, userSymbol: str):
     global game, playerOne, playerTwo
-    if (userName not in playerNames and len(playerNames) < 3 and userSymbol in allSymbols and userSymbol not in playerSymbols):
+    # Wenn Nutzername bereits existiert soll der Spieler nicht hinzugefuegt werden
+    if (userName in playerNames):
+        return {"information" : "Spieler existiert bereits", "status" : False}
+    #Wenn das Symbol nicht in allSymbol drin ist soll der Spieler nicht hinzugefuegt werden
+    if (userSymbol not in allSymbols):
+        return {"information": "Dieses Symbol existiert nicht"}
+    
+    # Wenn ein anderer Spieler bereits das Symbol besitzt
+    if (userSymbol in playerSymbols):
+        return {"information" : "Ein nutzer besitzt das Symbol bereits"}
+    
+    if (len(playerNames) < 2 ):
         if (not game):
             allSymbols.remove(userSymbol)
             playerNames.append(userName)
