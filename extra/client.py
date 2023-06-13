@@ -64,11 +64,20 @@ def game():
     
     response = requests.get(f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}").json()
     while(not response["status"]): 
-        print(response["information"])       
+        print(response["information"]) 
+        username = input("Gib dein Nutzername nocheinmal ein:")
+        response = requests.get(f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}").json()
         time.sleep(9.0)
-       
-        ## printe information
     
+
+    response = requests.get(f"{base_api_url}/play/{gameID}/wartebereich").json()
+    while(not response["status"]):
+        print(response["information"])
+        response = requests.get(f"{base_api_url}/play/{gameID}/wartebereich").json()
+        time.sleep(9.0)
+
+
+
     run = True
     nichtspamen = 0
     while(run):

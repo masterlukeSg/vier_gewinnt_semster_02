@@ -129,6 +129,7 @@ def main():
             else:
                 return {"information": "Spiel hat schon gestartet", "status": False}
 
+
         # Wenn bereits zwei Spieler im Game sind, dann erstellt er zwei Spieler in c++:
         # und fuegt sie in PlayerList hinzu und setzt das game und status auf true
         if len(playerNamesInstanz[onGoingGame]) == 2:
