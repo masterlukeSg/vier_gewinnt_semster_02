@@ -59,7 +59,7 @@ def main():
     async def homePage():
         global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
-        txtNachricht = f"Willkommen bei Viergewinnt. \n Es gibt aktuell {len(gameIdInstanz)} Spiele"
+        txtNachricht = f"Willkommen bei VIERGEWINNT. \nEs gibt aktuell {len(gameIdInstanz)} Spiele"
         return {"information": txtNachricht}
 
     @app.get("/joinGame")
@@ -68,9 +68,11 @@ def main():
 
         for i in range (0, len(playerNamesInstanz)):
             if len(playerNamesInstanz[i]) == 1:
+                onGoingGame = onGoingFKT(gameIdInstanz[i])
                 return {
                     "information": "Wir verbinden dich zu einem offenen Spiel",
                     "gameID": gameIdInstanz[i],
+                    "symbols" : allSymbolsInstanz[onGoingGame],
                     "status": True,
                 }
 
@@ -95,12 +97,11 @@ def main():
             elif (len(playerNamesInstanz[onGoingGame]) == 2):
                 return {"information" : "Spiel kann gestartet werden", "status" : True}
 
-    
-    
+
     
     # Spieler hinzufügen
     @app.get("/addPlayer/{gameID}/{userName}/{userSymbol}")
-    async def AddUser(userName: str, userSymbol: str, gameID: int):
+    async def addUser(userName: str, userSymbol: str, gameID: int):
         global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
         onGoingGame = onGoingFKT(gameID)
@@ -147,7 +148,7 @@ def main():
 
     # Spielbrett wiedergeben
     @app.get("/play/{gameID}/Board")
-    async def get_user_by_id(gameID: int):
+    async def printBoard(gameID: int):
         global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
         onGoingGame = onGoingFKT(gameID)
@@ -155,27 +156,25 @@ def main():
 
     # Gewinner des Spiels
     @app.get("/play/{gameID}/whoIsWinning")
-    async def getWinner(gameID: int):
+    async def whoIsWinning(gameID: int):
         global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
         onGoingGame = onGoingFKT(gameID)
 
         if not gameInstanz[onGoingGame]:
-            return {"information": "Warten auf Spieler"}
+            return {"information": "Warten auf Spieler", "status" : False}
 
         # Wenn es einen Gewinner gibt wird das Spiel beendet und Gewinner ausgegeben, sonst wird weiter gespielt
         else:
-            if (
-                sbInstanz[onGoingGame].whoIsWinning() != "unentschieden"
-                and sbInstanz[onGoingGame].whoIsWinning() != "null"
-            ):
+            if (sbInstanz[onGoingGame].whoIsWinning() != "unentschieden" and sbInstanz[onGoingGame].whoIsWinning() != "null"):
                 gameInstanz[onGoingGame] = False
                 return {
                     "information": sbInstanz[onGoingGame].whoIsWinning(),
                     "status": True,
                 }
             else:
-                return {"information": "Es gibt noch keinen Gewinner", "status": False}
+                return {"information": "Es gibt noch keinen Gewinner", 
+                        "status": False}
 
     # Spieler kann einen Ring hinzufuegen
     @app.get("/play/setRing/{gameID}/{player}/{position}")
@@ -221,7 +220,7 @@ def main():
             return {"information": "Du bist gerade nicht dran. Warte bis du dran bist"}
 
     @app.get("/play/{gameID}/werIstDran")
-    async def setRing(gameID: int):
+    async def whosTurn(gameID: int):
         global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
         onGoingGame = onGoingFKT(gameID)

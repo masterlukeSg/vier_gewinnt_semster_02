@@ -12,38 +12,6 @@ from pprint import pprint
 base_api_url = "http://127.0.0.1:8000"
 
 
-def main():
-    base_api_url = "http://127.0.0.1:8000"
-    
-    response = requests.get(base_api_url).json()
-    response_json = response["information"]
-    pprint(f"{response_json}")
-
-
-    response_json = requests.get(f"{base_api_url}/addPlayer/Lukas/XX").json()
-    current_guess = response_json['information']
-    pprint(f'{current_guess}')
-    
-    response_json = requests.get(f"{base_api_url}/addPlayer/Clara/00").json()
-    current_guess = response_json['information']
-    pprint(f'{current_guess}')
-    
-    response_json = requests.get(f"{base_api_url}/play/setRing/Lukas/3").json()
-    current_guess = response_json['information']
-    pprint(f'{current_guess}')
-
-    response_json = requests.get(f"{base_api_url}/play/Board").json()
-    current_guess = response_json['information']
-    print(f'{current_guess}')
-    
-    response_json = requests.get(f"{base_api_url}/play/whoIsWinning").json()
-    current_guess = response_json['information']
-    print(f'{current_guess}')
-
-
-    print(f"Text Nachricht von den coolste: '{vierGewinnt.__doc__}'")
-
-  
 def game():
     response=requests.get(base_api_url).json()
     print(response["information"])
@@ -67,24 +35,28 @@ def game():
         print(response["information"]) 
         username = input("Gib dein Nutzername nocheinmal ein:")
         response = requests.get(f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}").json()
-        time.sleep(9.0)
+        time.sleep(3.0)
     
 
     response = requests.get(f"{base_api_url}/play/{gameID}/wartebereich").json()
     while(not response["status"]):
         print(response["information"])
         response = requests.get(f"{base_api_url}/play/{gameID}/wartebereich").json()
-        time.sleep(9.0)
+        time.sleep(3.0)
 
 
 
     run = True
     nichtspamen = 0
     while(run):
-        if (nichtspamen == 0):
-            response = requests.get(f"{base_api_url}/play/{gameID}/werIstDran").json()
+        
+       
+        
+        
+        response = requests.get(f"{base_api_url}/play/{gameID}/werIstDran").json()
 
         if (response["information"] == username):
+            nichtspamen = 0
             response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
             ### printet board 
             print(response["information"])
@@ -97,12 +69,23 @@ def game():
                 position = input("Deine Eingabe war fehlerhaft. Versuch es erneut:")
                 response = requests.get(f"{base_api_url}/play/setRing/{gameID}/{username}/{position}").json()
             
+        
             response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
-            nichtspamen = 1
             ### printet board 
             print(response["information"])
+            
+            response = requests.get(f"{base_api_url}/play/{gameID}/whoIsWinning").json()
+            
+            if(response["status"]):
+                print(response["information"])
+                run = False
+                end()
+            
+            
+        
         
         else:
+            time.sleep(3.0)
             if (nichtspamen == 0):
                 print("Du bist nicht dran! Warte auf den anderen Spieler sein Ring zu platzieren")
                 nichtspamen = 1
@@ -111,6 +94,8 @@ def game():
        #response= requests.get(f"{base_api_url}/play/setRing/{username}/{dein_symbol}").json()
        
         
-
+def end():
+    print("Ende")
+    exit(1)
 
 game()
