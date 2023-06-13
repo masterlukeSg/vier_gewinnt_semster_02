@@ -85,15 +85,16 @@ def main():
             "status": False,
         }
 
-    @app.get("/play/{gameID}")
+    @app.get("/play/{gameID}/wartebereich")
     async def warteBereich( gameID: int):
         global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
         onGoingGame = onGoingFKT(gameID)
-        if (len(playerNamesInstanz[onGoingGame]) == 1):
-            return {"information" : "Warte auf weitere Spieler", "status" : False}
-        elif (len(playerNamesInstanz[onGoingGame]) == 2):
-            return {"information" : "Spiel kann gestartet werden", "status" : True}
-    
+        if onGoingGame != None:
+            if (len(playerNamesInstanz[onGoingGame]) == 1):
+                return {"information" : "Warte auf weitere Spieler", "status" : False}
+            elif (len(playerNamesInstanz[onGoingGame]) == 2):
+                return {"information" : "Spiel kann gestartet werden", "status" : True}
+
     
     
     
@@ -110,12 +111,12 @@ def main():
 
         # Wenn das Symbol nicht in allSymbol drin ist soll der Spieler nicht hinzugefuegt werden
         if userSymbol not in allSymbolsInstanz[onGoingGame]:
-            return {"information": "Dieses Symbol existiert nicht"}
+            return {"information": "Dieses Symbol existiert nicht", "status" : False}
 
         # Wenn ein anderer Spieler bereits das Symbol besitzt
 
         if userSymbol in playerSymbolsInstanz[onGoingGame]:
-            return {"information": "Ein nutzer besitzt das Symbol bereits"}
+            return {"information": "Ein nutzer besitzt das Symbol bereits", "status" : False}
 
         # Wenn es gar keinen oder einen Spieler gibt und das Game noch nicht gestartet hat dann:
         # entfernt er das Usersymbol aus allSymbols und fuegt er einen neuen Spieler und Symbol hinzu:
@@ -127,6 +128,7 @@ def main():
                 playerSymbolsInstanz[onGoingGame].append(userSymbol)
             else:
                 return {"information": "Spiel hat schon gestartet", "status": False}
+
 
         # Wenn bereits zwei Spieler im Game sind, dann erstellt er zwei Spieler in c++:
         # und fuegt sie in PlayerList hinzu und setzt das game und status auf true
@@ -141,7 +143,7 @@ def main():
             return {"information": "Spiel kann gestartet werden.", "status": True}
 
         else:
-            return {"information": "Warte auf weitere Spieler...", "status": False}
+            return {"information": "Warte auf weitere Spieler...", "status": True}
 
     # Spielbrett wiedergeben
     @app.get("/play/{gameID}/Board")
