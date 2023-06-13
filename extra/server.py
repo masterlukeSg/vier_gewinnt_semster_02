@@ -85,6 +85,18 @@ def main():
             "status": False,
         }
 
+    @app.get("/play/{gameID}")
+    async def warteBereich( gameID: int):
+        global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
+        onGoingGame = onGoingFKT(gameID)
+        if (len(playerNamesInstanz[onGoingGame]) == 1):
+            return {"information" : "Warte auf weitere Spieler", "status" : False}
+        elif (len(playerNamesInstanz[onGoingGame]) == 2):
+            return {"information" : "Spiel kann gestartet werden", "status" : True}
+    
+    
+    
+    
     # Spieler hinzufügen
     @app.get("/addPlayer/{gameID}/{userName}/{userSymbol}")
     async def AddUser(userName: str, userSymbol: str, gameID: int):
