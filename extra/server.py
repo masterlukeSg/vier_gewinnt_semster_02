@@ -17,12 +17,14 @@ sb = lobby.createNewGame()
 
 ## players werden hier hinzugefuegt
 # wenn spiel gestartet, wird es geleert, damit ein neues Spiel gespielt werden kann
+# playerList speichert, erstellte c++ spieler
 playerNames, playerSymbols,playerList = [], [], []
 allSymbols = ["XX", "00", "++", "**"]
 playerOne, playerTwo = None, None
 game = False
 counter = 0
 
+# Gibt die Textnachricht und Symbole wieder
 @app.get("/")
 async def homePage():
     txtNachricht = f"Willkommen bei Viergewinnt. \nIn dieser Lobby sind aktuell {len(playerNames)} Spieler."
