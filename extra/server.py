@@ -77,8 +77,10 @@ def main():
         neuesGameAuffuellen()
         spielID = random.randint(0, 1000000000)
         gameIdInstanz.append(spielID)
+        onGoingGame = onGoingFKT(spielID)
         return {
             "information": "Es wurde ein neues Spiel für dich erstellt",
+            "symbols" : allSymbolsInstanz[onGoingGame],
             "gameID": spielID,
             "status": False,
         }
