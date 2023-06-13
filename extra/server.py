@@ -104,10 +104,12 @@ async def setRing(position: int, player: str):
     global counter
     if (not game):
         return {"information:": "Warten auf weitere Spieler..."}
-    # 
+    # Wenn der Counter auf null ist und der player der erste Spieler ist dann wird der Ring gesetzt
     if (counter == 0 and player == playerList[0].getName()):
         sb.setPlayer(playerOne)
         pos = sb.setRing(position)
+    # Wenn die Position schon besetzt ist, dann wird ausgegeben dass der Zug ungueltig ist:
+    # und status auf null gesetzt, sonst wird  der counter auf eins gesetzt
         if (not pos):
             return {"information": "Der Zug war ungültig, bitte versuche es erneut",
             "status" : False}
@@ -115,9 +117,12 @@ async def setRing(position: int, player: str):
             counter = 1
             return {"information" : "Dein Ring wird positioniert",
             "status": True}
+    #Wenn der Counter gleich eins ist und der zweite Spieler dran ist, dann wird der RIng gesetzt
     elif (counter == 1 and playerList[1].getName()):
         sb.setPlayer(playerTwo)
         pos = sb.setRing(position)
+    ## Wenn die Position schon besetzt ist, dann wird ausgegeben dass der Zug ungueltig ist:
+    # und status auf null gesetzt, sonst wird  der counter wieder auf null gesetzt
         if (not pos):
             return {"information": "Der Zug war ungültig, bitte versuche es erneut",
             "status" : False}
