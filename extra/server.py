@@ -103,6 +103,18 @@ def main():
 
 
     
+    @app.get("/play/{gameID}/gameOn_OFF")
+    async def isGameOn(gameID : int):
+        global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
+
+        onGoingGame = onGoingFKT(gameID)
+        
+        if (gameInstanz[onGoingGame] == False):
+            return {"information" : "Das game ist beendet",
+                    "status" : False}
+        return {"information" : "Das game ist noch am laufen",
+                "status" :True}        
+    
     # Spieler hinzufügen
     @app.get("/addPlayer/{gameID}/{userName}/{userSymbol}")
     async def addUser(userName: str, userSymbol: str, gameID: int):

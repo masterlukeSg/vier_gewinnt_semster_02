@@ -26,9 +26,9 @@ namespace vierGewinnt
 
     void Spielbrett::setPlayer(vierGewinnt::Spieler player_)
     {
-        //player = player_;
+        // player = player_;
         ring = player_.getSymbol();
-    } 
+    }
 
     string Spielbrett::print()
     {
@@ -76,10 +76,7 @@ namespace vierGewinnt
     bool Spielbrett::setRing(int coordinate)
     {
         if (!legalMove(coordinate))
-        {
-            cout << "In die Reihe " << coordinate << " kann nichts eingefügt werden" << endl;
             return false;
-        }
 
         matrixBoard[coordinate].push_back(ring);
 
@@ -120,41 +117,40 @@ namespace vierGewinnt
         {
             counter = 0;
             for (string names : matrixBoard[i])
-            {   
-                if (names == ring)
-                    std::cout << "sollte erkannt haben aka counter um eins erhöht haben" << std::endl;
-                std::cout << "Names: " << names <<  " Ring: " << ring << std::endl; 
-                std::cout << "Counter: " << counter << std::endl;
-
+            {
                 if (names == ring)
                     counter++;
-              
-                else if (names != ring)    
+
+                else if (names != ring)
                     counter = 0;
-                
+
                 if (counter == 4)
-                return ring;
+                    return ring;
             }
 
             if (counter == 4)
                 return ring;
-
-           
         }
 
         // horizontal untersuchen
         counter = 0;
         while (trys < 7)
         {
+            std::cout << "wir sind in horizontal" << std::endl;
             for (int i = 0; i < matrixBoard.size(); i++)
             {
                 // TODO: Klappt diese Abfrage ??
+                std::cout << "Trys:" << trys << "coutner: " << counter << std::endl;
+
                 if (matrixBoard[i].size() > trys)
                 {
                     if (matrixBoard[i][trys] == ring)
                         counter++;
 
-                    else
+                    if (counter == 4)
+                        return ring;
+                    
+                    else if (matrixBoard[i][trys] != ring)
                         counter = 0;
                 }
             }
@@ -246,8 +242,8 @@ namespace vierGewinnt
                 boardAndCoordinateVector.clear();
         }
 
-    //      for (string s : boardAndCoordinateVector)
-    //          std::cout << s << std::endl;
+        //      for (string s : boardAndCoordinateVector)
+        //          std::cout << s << std::endl;
         return "null";
     }
 }

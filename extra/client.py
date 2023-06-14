@@ -54,11 +54,21 @@ def game():
     nichtspamen = 0
     
     while(run):
-    
+        
+       
+        
         response = requests.get(f"{base_api_url}/play/{gameID}/werIstDran").json()
 
         if (response["information"] == username):
             nichtspamen = 0
+            
+            response = requests.get(f"{base_api_url}/play/{gameID}/gameOn_OFF").json()
+            if (not response["status"]):
+                run = False
+                print(response)
+                end()
+            
+            
             response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
             ### printet board 
             print(response["information"])
