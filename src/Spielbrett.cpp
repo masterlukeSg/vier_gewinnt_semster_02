@@ -115,7 +115,6 @@ namespace vierGewinnt
         counter = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
-            counter = 0;
             for (string names : matrixBoard[i])
             {
                 if (names == ring)
@@ -130,6 +129,7 @@ namespace vierGewinnt
 
             if (counter == 4)
                 return ring;
+            counter = 0;
         }
 
         // horizontal untersuchen
@@ -138,9 +138,6 @@ namespace vierGewinnt
         {
             for (int i = 0; i < matrixBoard.size(); i++)
             {
-                // TODO: Klappt diese Abfrage ??
-
-
                 if (matrixBoard[i].size() > trys)
                 {
                     if (matrixBoard[i][trys] == ring)
@@ -148,10 +145,12 @@ namespace vierGewinnt
 
                     if (counter == 4)
                         return ring;
-                    
+
                     else if (matrixBoard[i][trys] != ring)
                         counter = 0;
                 }
+                else
+                    counter = 0;
             }
 
             if (counter == 4)
@@ -177,13 +176,17 @@ namespace vierGewinnt
         bool alreadyCounted = false;
 
         while (trys != 4)
-        {
-            for (int i = 0; i < matrixBoard[board].size(); i++)
+        {   
+            //matrixBoard[board].size()
+            for (int i = 0; i < 7 ; i++)
             {
+                if (boardAndCoordinateVector.size() == 4)
+                    return ring;
+
                 // Abfragen stehen hier, damit man nicht zwei mal den Anfangswert "matrixBoard[board][coordiate]" abfragt und somit doppelt den couter zählen lässt
 
                 // Trysabfrage
-                if (trys == 1 && board > 2 && coordinateInBoard > 0)
+                if (trys == 1 && board >= 2 && coordinateInBoard > 0)
                 {
                     coordinateInBoard--;
                     board--;
@@ -195,10 +198,10 @@ namespace vierGewinnt
                     board++;
                 }
 
-                // Koordinaten gespeichert werden und am Ende wird gezählt
+                // Koordinaten werden gespeichert und am Ende wird gezählt
                 for (string s : boardAndCoordinateVector)
                 {
-                    if (s == to_string(board) + to_string(coordinateInBoard))
+                    if (s == (to_string(board) + to_string(coordinateInBoard)))
                         alreadyCounted = true;
                 }
 
@@ -215,7 +218,10 @@ namespace vierGewinnt
                     else
                         goOn = false;
                 }
-                std::cout << "Gezählte ringe: " << boardAndCoordinateVector.size() << std::endl;
+                std::cout << boardAndCoordinateVector.size() << std::endl;
+
+                if (boardAndCoordinateVector.size() == 4)
+                    return ring;
 
                 // Trysabfrage
                 if (trys == 0 && board < 7)
@@ -223,7 +229,7 @@ namespace vierGewinnt
                     coordinateInBoard++;
                     board++;
                 }
-                else if (trys == 2 && board > 2)
+                else if (trys == 2 && board >= 2)
                 {
                     coordinateInBoard++;
                     board--;

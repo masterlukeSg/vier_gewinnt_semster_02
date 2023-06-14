@@ -39,7 +39,7 @@ def game():
         response = requests.get(
             f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}"
         ).json()
-        time.sleep(3.0)
+        time.sleep(2.0)
         nichtspamen = 1
 
     nichtspamen = 0
@@ -48,7 +48,7 @@ def game():
         if nichtspamen == 0:
             print(response["information"])
         response = requests.get(f"{base_api_url}/play/{gameID}/wartebereich").json()
-        time.sleep(3.0)
+        time.sleep(2.0)
         nichtspamen = 1
 
     run = True
@@ -59,18 +59,20 @@ def game():
 
         if response["information"] == username:
             nichtspamen = 0
-
+            
+            response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
+            ### printet board
+            print(response["information"])
+            
             response = requests.get(f"{base_api_url}/play/{gameID}/gameOn_OFF").json()
             if not response["status"]:
                 run = False
                 print(response)
                 end()
-
-            response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
-            ### printet board
-            print(response["information"])
-
             
+            
+            
+        
             position = input("In welche Spalte willst du deinen Ring platzieren:")
             
             while (position == " " or position == "" or position.isspace()):
@@ -80,7 +82,7 @@ def game():
                 while( int(position) < -1 or int(position) > 7):
                     position = input("In welche Spalte willst du deinen Ring platzieren:")
             
-               
+            
            
             response = requests.get(
                 f"{base_api_url}/play/setRing/{gameID}/{username}/{position}"
@@ -93,15 +95,17 @@ def game():
                     f"{base_api_url}/play/setRing/{gameID}/{username}/{position}"
                 ).json()
 
+            response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
+            ### printet board
+            print(response["information"])
+            
             response = requests.get(f"{base_api_url}/play/{gameID}/whoIsWinning").json()
             if response["status"]:
                 run = False
                 print(response)
                 end()
 
-            response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
-            ### printet board
-            print(response["information"])
+          
 
         else:
             time.sleep(3.0)
