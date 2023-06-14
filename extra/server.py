@@ -66,9 +66,6 @@ def main():
     @app.get("/joinGame")
     async def joinGame():
         global wartendeSpieler, lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
-
-
-            
         
         for i in range (0, len(playerNamesInstanz)):
             if len(playerNamesInstanz[i]) == 1:

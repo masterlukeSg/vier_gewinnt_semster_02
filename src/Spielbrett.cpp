@@ -136,11 +136,10 @@ namespace vierGewinnt
         counter = 0;
         while (trys < 7)
         {
-            std::cout << "wir sind in horizontal" << std::endl;
             for (int i = 0; i < matrixBoard.size(); i++)
             {
                 // TODO: Klappt diese Abfrage ??
-                std::cout << "Trys:" << trys << "coutner: " << counter << std::endl;
+
 
                 if (matrixBoard[i].size() > trys)
                 {
@@ -204,7 +203,8 @@ namespace vierGewinnt
                 }
 
                 // Richtige Abfrage
-                if (matrixBoard[board].size() > coordinateInBoard && coordinateInBoard >= 0 && !alreadyCounted)
+                // goOn hinuzugeufegt
+                if (matrixBoard[board].size() > coordinateInBoard && coordinateInBoard >= 0 && !alreadyCounted && goOn)
                 {
                     if (matrixBoard[board][coordinateInBoard] == ring)
                     {
@@ -215,6 +215,7 @@ namespace vierGewinnt
                     else
                         goOn = false;
                 }
+                std::cout << "Gezählte ringe: " << boardAndCoordinateVector.size() << std::endl;
 
                 // Trysabfrage
                 if (trys == 0 && board < 7)
