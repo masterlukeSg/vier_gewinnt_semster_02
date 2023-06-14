@@ -22,6 +22,7 @@ lobby = Lobby()
     counterInstanz,
     sbInstanz,
 ) = ([], [], [], [], [], [], [], [])
+wartendeSpieler = 0
 
 
 def onGoingFKT(gameID):
@@ -36,7 +37,7 @@ def onGoingFKT(gameID):
 
 
 def neuesGameAuffuellen():
-    global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
+    global wartendeSpieler, lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
     sb = lobby.createNewGame()
 
     playerNames, playerSymbols, playerList = [],[], []
@@ -57,15 +58,18 @@ def main():
     # Gibt die Textnachricht und Symbole wieder
     @app.get("/")
     async def homePage():
-        global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
+        global wartendeSpieler,lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
         txtNachricht = f"Willkommen bei VIERGEWINNT. \nEs gibt aktuell {len(gameIdInstanz)} Spiele"
         return {"information": txtNachricht}
 
     @app.get("/joinGame")
     async def joinGame():
-        global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
+        global wartendeSpieler, lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
+
+            
+        
         for i in range (0, len(playerNamesInstanz)):
             if len(playerNamesInstanz[i]) == 1:
                 onGoingGame = onGoingFKT(gameIdInstanz[i])
@@ -89,7 +93,7 @@ def main():
 
     @app.get("/play/{gameID}/wartebereich")
     async def warteBereich( gameID: int):
-        global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
+        global wartendeSpieler, lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
         onGoingGame = onGoingFKT(gameID)
         if onGoingGame != None:       
             if (len(playerNamesInstanz[onGoingGame]) == 1):
@@ -162,7 +166,8 @@ def main():
         onGoingGame = onGoingFKT(gameID)
 
         if not gameInstanz[onGoingGame]:
-            return {"information": "Warten auf Spieler", "status" : False}
+            return {"information": "Warten auf Spieler", 
+                    "status" : False}
 
         # Wenn es einen Gewinner gibt wird das Spiel beendet und Gewinner ausgegeben, sonst wird weiter gespielt
         else:
@@ -173,6 +178,7 @@ def main():
                     "status": True,
                 }
             else:
+                #print(sbInstanz[onGoingGame].whoIsWinning() )
                 return {"information": "Es gibt noch keinen Gewinner", 
                         "status": False}
 

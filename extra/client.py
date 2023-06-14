@@ -29,30 +29,32 @@ def game():
            true = False ##symbol wurde hier schon gewählt
     
 
-    
+    nichtspamen = 0
     response = requests.get(f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}").json()
     while(not response["status"]): 
-        print(response["information"]) 
+        if (nichtspamen == 0):
+            print(response["information"]) 
         username = input("Gib dein Nutzername nocheinmal ein:")
         response = requests.get(f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}").json()
         time.sleep(3.0)
+        nichtspamen = 1
     
-
+    nichtspamen = 0
     response = requests.get(f"{base_api_url}/play/{gameID}/wartebereich").json()
     while(not response["status"]):
-        print(response["information"])
+        if (nichtspamen == 0):
+            print(response["information"])
         response = requests.get(f"{base_api_url}/play/{gameID}/wartebereich").json()
         time.sleep(3.0)
+        nichtspamen = 1
 
 
 
     run = True
     nichtspamen = 0
+    
     while(run):
-        
-       
-        
-        
+    
         response = requests.get(f"{base_api_url}/play/{gameID}/werIstDran").json()
 
         if (response["information"] == username):
@@ -68,20 +70,17 @@ def game():
             while (not response["status"]):
                 position = input("Deine Eingabe war fehlerhaft. Versuch es erneut:")
                 response = requests.get(f"{base_api_url}/play/setRing/{gameID}/{username}/{position}").json()
-            
+
+            response = requests.get(f"{base_api_url}/play/{gameID}/whoIsWinning").json()
+            if (response["status"]):
+                run = False
+                print(response)
+                end()
         
             response = requests.get(f"{base_api_url}/play/{gameID}/Board").json()
             ### printet board 
             print(response["information"])
-            
-            response = requests.get(f"{base_api_url}/play/{gameID}/whoIsWinning").json()
-            
-            if(response["status"]):
-                print(response["information"])
-                run = False
-                end()
-            
-            
+
         
         
         else:

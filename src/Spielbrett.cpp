@@ -115,22 +115,31 @@ namespace vierGewinnt
             return "null";
 
         // vertikal untersuchen
-
+        counter = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
+            counter = 0;
             for (string names : matrixBoard[i])
-            {
+            {   
+                if (names == ring)
+                    std::cout << "sollte erkannt haben aka counter um eins erhöht haben" << std::endl;
+                std::cout << "Names: " << names <<  " Ring: " << ring << std::endl; 
+                std::cout << "Counter: " << counter << std::endl;
+
                 if (names == ring)
                     counter++;
-
-                else
+              
+                else if (names != ring)    
                     counter = 0;
+                
+                if (counter == 4)
+                return ring;
             }
 
             if (counter == 4)
                 return ring;
 
-            counter = 0;
+           
         }
 
         // horizontal untersuchen
@@ -237,9 +246,8 @@ namespace vierGewinnt
                 boardAndCoordinateVector.clear();
         }
 
-        for (string s : boardAndCoordinateVector)
-            std::cout << s << std::endl;
-
+    //      for (string s : boardAndCoordinateVector)
+    //          std::cout << s << std::endl;
         return "null";
     }
 }
