@@ -32,13 +32,16 @@ def game():
     response = requests.get(
         f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}"
     ).json()
+    
     while not response["status"]:
         if nichtspamen == 0:
             print(response["information"])
+        
         username = input("Gib dein Nutzername nocheinmal ein:")
         response = requests.get(
             f"{base_api_url}/addPlayer/{gameID}/{username}/{dein_symbol}"
         ).json()
+        
         time.sleep(2.0)
         nichtspamen = 1
 
@@ -69,9 +72,7 @@ def game():
                 run = False
                 print(response)
                 end()
-            
-            
-            
+        
         
             position = input("In welche Spalte willst du deinen Ring platzieren:")
             
@@ -102,8 +103,9 @@ def game():
             response = requests.get(f"{base_api_url}/play/{gameID}/whoIsWinning").json()
             if response["status"]:
                 run = False
-                print(response)
-                end()
+                if (response == username):
+                    print("Du hast das Spiel gewonnen!")
+                    end()
 
           
 
@@ -119,8 +121,7 @@ def game():
 
 
 def end():
-    print("Ende")
+    print("Glückwunsch!!!")
     exit(1)
-
 
 game()

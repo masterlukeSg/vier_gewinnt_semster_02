@@ -66,6 +66,9 @@ def main():
     @app.get("/joinGame")
     async def joinGame():
         global wartendeSpieler, lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
+
+
+            
         
         for i in range (0, len(playerNamesInstanz)):
             if len(playerNamesInstanz[i]) == 1:
@@ -109,8 +112,7 @@ def main():
         if (gameInstanz[onGoingGame] == False):
             return {"information" : "Das game ist beendet",
                     "status" : False}
-        return {"information" : "Das game ist noch am laufen",
-                "status" :True}        
+        return {"information" : "Das game ist noch am laufen", "status" :True}        
     
     # Spieler hinzufügen
     @app.get("/addPlayer/{gameID}/{userName}/{userSymbol}")
