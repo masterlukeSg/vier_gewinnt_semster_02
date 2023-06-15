@@ -63,12 +63,12 @@ def main():
         txtNachricht = f"Willkommen bei VIERGEWINNT. \nEs gibt aktuell {len(gameIdInstanz)} Spiele"
         return {"information": txtNachricht}
 
+    # Es wird durch die Spielerlisten iteriert, und nach einem Spiel gesucht in dem moch ein Platz frei ist bzw in dem nur ein Spieler:
+    #aktuell drin ist. Der zweite Spieler wird mit diesem Spiel verbunden.
     @app.get("/joinGame")
     async def joinGame():
         global wartendeSpieler, lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
 
-
-            
         
         for i in range (0, len(playerNamesInstanz)):
             if len(playerNamesInstanz[i]) == 1:
@@ -79,7 +79,8 @@ def main():
                     "symbols" : allSymbolsInstanz[onGoingGame],
                     "status": True,
                 }
-
+    #Die Funktion fuellt ein neues Spiel auf indem er eine zufaellige SpielId erstellt und dieser der gameIDInstanz hinzufuegt:
+    #Es wird die Nachricht zurueck gegeben das ein neues Spiel fuer den Spieler erstellt wurde mit einem Symbol un einer gameID
         neuesGameAuffuellen()
         spielID = random.randint(0, 1000000000)
         gameIdInstanz.append(spielID)
@@ -91,6 +92,8 @@ def main():
             "status": False,
         }
 
+ #Wenn es ein Game gibt wird ueberprueft wie vieler Spieler in diesem sind. Ist ein Spieler drin wird auf einen weiteren gewartet:
+ #Sind zwei Spieler im game wird das Spiel gestartet
     @app.get("/play/{gameID}/wartebereich")
     async def warteBereich( gameID: int):
         global wartendeSpieler, lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
@@ -102,7 +105,7 @@ def main():
                 return {"information" : "Spiel kann gestartet werden", "status" : True}
 
 
-    
+    #wenn das aktuelle Spiel nicht in Gameinstanz ist, dann ist das Spiel beendet, sonst ist das Spiel noch am laufen
     @app.get("/play/{gameID}/gameOn_OFF")
     async def isGameOn(gameID : int):
         global lobby, gameIdInstanz, sbInstanz, gameInstanz, playerNamesInstanz, playerSymbolsInstanz, playerListInstanz, allSymbolsInstanz, counterInstanz
