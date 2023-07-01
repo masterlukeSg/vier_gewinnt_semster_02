@@ -1,13 +1,18 @@
-#include <../include/Spieler.hpp>
+#include "../include/Spieler.hpp"
 #include <iostream>
 #include <string>
 
-namespace vierGewinnt{
 
-Spieler(std::string name){
-    name=name_;}
+namespace vierGewinnt
+{
+    std::string Spieler::getName() const
+    {
+        return name;
+    }
 
-Spieler::getName{
-    return name;
-}
+    std::string Spieler::getSymbol() const
+    {
+        return symbol;
+    }
+
 }

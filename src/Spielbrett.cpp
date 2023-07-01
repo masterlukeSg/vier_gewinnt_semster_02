@@ -1,7 +1,10 @@
+#include "../include/Spieler.hpp"
 #include "../include/Spielbrett.hpp"
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
+#include <tuple>
 
 // cmake -S . -B build && cmake --build build && cmake --install build
 
@@ -10,7 +13,7 @@ using namespace std;
 namespace vierGewinnt
 {
 
-    Spielbrett::Spielbrett(string ringOne_, string ringTwo_) : unentschieden("unentschieden"), ringOne(ringOne_), ringTwo(ringTwo_)
+    Spielbrett::Spielbrett() : unentschieden("unentschieden")
     {
 
         vector spaltenName = matrixBoard[0];
@@ -19,6 +22,12 @@ namespace vierGewinnt
             spaltenName.push_back("0" + to_string(i + 1));
 
         matrixBoard[0] = spaltenName;
+    }
+
+    void Spielbrett::setPlayer(vierGewinnt::Spieler player_)
+    {
+        // player = player_;
+        ring = player_.getSymbol();
     }
 
     string Spielbrett::print()
@@ -52,6 +61,8 @@ namespace vierGewinnt
 
     bool Spielbrett::legalMove(int position)
     {
+        if (ring == "null")
+            return false;
         if (position > 7)
             return false;
         else if (position <= 0)
@@ -62,47 +73,184 @@ namespace vierGewinnt
         return true;
     }
 
-    bool Spielbrett::setRing(int position)
+    bool Spielbrett::setRing(int coordinate)
     {
-        if (!legalMove(position))
-        {
-            cout << "In die Reihe " << position << " kann nichts eingefügt werden" << endl;
+        if (!legalMove(coordinate))
             return false;
-        }
 
-        // TODO: player->getName();
-        matrixBoard[position].push_back(ringOne);
+        matrixBoard[coordinate].push_back(ring);
+
+        // für getGesetzterRingPosition Variablen
+        matrix = coordinate;
+        position = matrixBoard[coordinate].size() - 1;
+
         return true;
+    }
+
+    std::tuple<int, int> Spielbrett::getGesetzterRingPosition()
+    {
+        return std::tuple<int, int>{matrix, position};
     }
 
     std::string Spielbrett::whoIsWinning()
     {
-        int counterOne, counterTwo = 0;
+
+        // untschieden
+
+        if (matrix == 0 && position == 0)
+            return "null";
+
+        int matrixBoardGroeße, counter, trys = 0;
+
+        for (size_t i = 1; i < matrixBoard.size(); i++)
+            if (matrixBoard[i].size() == 6)
+                matrixBoardGroeße++;
+
+        if (matrixBoardGroeße == 7)
+            return unentschieden;
+        else if (matrixBoardGroeße == 0)
+            return "null";
 
         // vertikal untersuchen
-
+        counter = 0;
         for (size_t i = 1; i < matrixBoard.size(); i++)
         {
             for (string names : matrixBoard[i])
             {
-                if (names == ringOne)
-                {
-                    counterOne++;
-                    counterTwo = 0;
-                }
-                else
-                {
-                    counterTwo++;
-                    counterOne = 0;
-                }
-                if (counterOne == 4)
-                    return ringOne;
-                else if (counterTwo == 4)
-                    return ringTwo;
+                if (names == ring)
+                    counter++;
+
+                else if (names != ring)
+                    counter = 0;
+
+                if (counter == 4)
+                    return ring;
             }
+
+            if (counter == 4)
+                return ring;
+            counter = 0;
         }
 
-        // bei unetnschieden
-        return unentschieden;
+        // horizontal untersuchen
+        counter = 0;
+        while (trys < 7)
+        {
+            for (int i = 0; i < matrixBoard.size(); i++)
+            {
+                if (matrixBoard[i].size() > trys)
+                {
+                    if (matrixBoard[i][trys] == ring)
+                        counter++;
+
+                    if (counter == 4)
+                        return ring;
+
+                    else if (matrixBoard[i][trys] != ring)
+                        counter = 0;
+                }
+                else
+                    counter = 0;
+            }
+
+            if (counter == 4)
+                return ring;
+            counter = 0;
+            trys++;
+        }
+
+        auto getPosition = getGesetzterRingPosition();
+
+        const int matrixInt = std::get<0>(getPosition);
+        int positionInt = std::get<1>(getPosition);
+
+        int board = std::get<0>(getPosition);
+        int coordinateInBoard = std::get<1>(getPosition);
+        // 4 trys:
+        // 0->1: rechts oben, bis man auf was "flasches stoßt" + 1->2 links unten. Danach counter reseten
+        // 2->3: links oben + 3->4 rechts unten. Danach counter reseten
+
+        trys = 0;
+        bool goOn = true;
+        std::vector<string> boardAndCoordinateVector;
+        bool alreadyCounted = false;
+
+        while (trys != 4)
+        {   
+            //matrixBoard[board].size()
+            for (int i = 0; i < 7 ; i++)
+            {
+                if (boardAndCoordinateVector.size() == 4)
+                    return ring;
+
+                // Abfragen stehen hier, damit man nicht zwei mal den Anfangswert "matrixBoard[board][coordiate]" abfragt und somit doppelt den couter zählen lässt
+
+                // Trysabfrage
+                if (trys == 1 && board >= 2 && coordinateInBoard > 0)
+                {
+                    coordinateInBoard--;
+                    board--;
+                }
+
+                else if (trys == 3 && board < 7 && coordinateInBoard > 0)
+                {
+                    coordinateInBoard--;
+                    board++;
+                }
+
+                // Koordinaten werden gespeichert und am Ende wird gezählt
+                for (string s : boardAndCoordinateVector)
+                {
+                    if (s == (to_string(board) + to_string(coordinateInBoard)))
+                        alreadyCounted = true;
+                }
+
+                // Richtige Abfrage
+                // goOn hinuzugeufegt
+                if (matrixBoard[board].size() > coordinateInBoard && coordinateInBoard >= 0 && !alreadyCounted && goOn)
+                {
+                    if (matrixBoard[board][coordinateInBoard] == ring)
+                    {
+                        boardAndCoordinateVector.push_back(to_string(board) + to_string(coordinateInBoard));
+                        alreadyCounted = false;
+                    }
+
+                    else
+                        goOn = false;
+                }
+                std::cout << boardAndCoordinateVector.size() << std::endl;
+
+                if (boardAndCoordinateVector.size() == 4)
+                    return ring;
+
+                // Trysabfrage
+                if (trys == 0 && board < 7)
+                {
+                    coordinateInBoard++;
+                    board++;
+                }
+                else if (trys == 2 && board >= 2)
+                {
+                    coordinateInBoard++;
+                    board--;
+                }
+
+                if (boardAndCoordinateVector.size() == 4)
+                    return ring;
+            }
+
+            trys++;
+            board = matrixInt;
+            coordinateInBoard = position;
+            goOn = true;
+            alreadyCounted = false;
+
+            if (trys == 2)
+                boardAndCoordinateVector.clear();
+        }
+
+        //      for (string s : boardAndCoordinateVector)
+        //          std::cout << s << std::endl;
+        return "null";
     }
 }

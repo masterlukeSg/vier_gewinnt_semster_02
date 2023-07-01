@@ -1,18 +1,25 @@
+#pragma once
+
 #include <string>
 #include <iostream>
 
-namespace vierGewinnt {
-
-class Spieler
+namespace vierGewinnt
 {
-private:
-std::string name;
+    class Spieler
+    {
+    private:
+        std::string name;
+        std::string symbol;
 
-public:
-Spieler(std::string name);
+    public:
+        Spieler(std::string name_, std::string symbol_)
 
-std::string getName();
+            : name(name_), symbol(symbol_)
+        {
+        }
 
+        std::string getName() const;
 
-};
-} 
+        std::string getSymbol() const;
+    };
+}
