@@ -4,8 +4,8 @@
 
 namespace vierGewinnt{
 
-Spieler(std::string name_){
-    name=name_}
+Spieler(std::string name){
+    name=name_;}
 
 Spieler::getName{
     return name;
